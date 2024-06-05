@@ -12,7 +12,7 @@ class MovieRepository implements IMovieRepository {
     this.ormRepository = dataSource.getRepository(Movie);
   }
 
-  public async findById(id: string): Promise<IMovies | null> {
+  public async findById(id: string): Promise<Movie | null> {
     const movie = await this.ormRepository.findOne({ where: { id } });
     return movie;
   }
@@ -30,7 +30,7 @@ class MovieRepository implements IMovieRepository {
     genre,
     release_date,
     sessions,
-  }: ICreateMovie): Promise<IMovies | undefined> {
+  }: ICreateMovie): Promise<Movie> {
     const movie = this.ormRepository.create({
       image,
       name,
@@ -45,14 +45,13 @@ class MovieRepository implements IMovieRepository {
   }
 
   public async save(movie: Movie): Promise<Movie> {
-    return await this.ormRepository.save(movie);
+    await this.ormRepository.save(movie);
+
+    return movie;
   }
 
-  public async remove(id: string): Promise<void> {
-    const movie = await this.ormRepository.findOne({ where: { id } });
-    if (movie) {
-      await this.ormRepository.remove(movie);
-    }
+  public async remove(movie: Movie): Promise<void> {
+    await this.ormRepository.remove(movie);
   }
 }
 

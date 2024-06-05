@@ -4,7 +4,7 @@ import { IMovies } from '../models/IMovies';
 export interface IMovieRepository {
   findById(id: string): Promise<IMovies | null>;
   create(data: IMovies): Promise<IMovies | undefined>;
-  remove(id: string): Promise<void>;
+  remove(movie: Movie): Promise<void>;
   findAll(): Promise<Movie[]>;
   save(movie: Movie): Promise<Movie>;
 }
