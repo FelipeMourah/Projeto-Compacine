@@ -20,7 +20,7 @@ ensureDirectoryExistence(databaseDir);
 export const dataSource = new DataSource({
   type: 'sqlite',
   database: databasePath,
-  entities: [],
-  migrations: [],
+  entities: ['./src/modules/**/infra/typeorm/entities/*.ts'],
+  migrations: ['./src/shared/infra/typeorm/migrations/*.ts'],
   synchronize: true,
 });
