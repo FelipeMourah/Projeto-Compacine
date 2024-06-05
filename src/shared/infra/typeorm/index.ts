@@ -21,6 +21,6 @@ export const dataSource = new DataSource({
   type: 'sqlite',
   database: databasePath,
   entities: [],
-  migrations: [],
+  migrations: ['./src/shared/infra/typeorm/migrations/*.ts'],
   synchronize: true,
 });
