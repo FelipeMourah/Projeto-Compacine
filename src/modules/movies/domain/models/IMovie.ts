@@ -3,10 +3,10 @@ export interface IMovies {
   image: string;
   name: string;
   description: string;
-  actors: string[];
+  actors: string;
   genre: string;
   release_date: string;
-  sessions: string[];
+  sessions: string;
   created_at: Date;
   updated_at: Date;
 }

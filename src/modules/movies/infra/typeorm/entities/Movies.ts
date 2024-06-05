@@ -22,7 +22,7 @@ class Movie implements IMovies {
   description: string;
 
   @Column()
-  actors: string[];
+  actors: string;
 
   @Column()
   genre: string;
@@ -31,7 +31,7 @@ class Movie implements IMovies {
   release_date: string;
 
   @Column()
-  sessions: string[];
+  sessions: string;
 
   @CreateDateColumn()
   created_at: Date;
