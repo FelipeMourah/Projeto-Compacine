@@ -22,5 +22,5 @@ export const dataSource = new DataSource({
   database: databasePath,
   entities: ['./src/modules/**/infra/typeorm/entities/*.ts'],
   migrations: ['./src/shared/infra/typeorm/migrations/*.ts'],
-  synchronize: true,
+  synchronize: false,
 });
