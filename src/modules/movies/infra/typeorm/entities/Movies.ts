@@ -1,4 +1,4 @@
-import { IMovies } from '@modules/movies/domain/models/IMovie';
+import { IMovies } from '@modules/movies/domain/models/IMovies';
 import {
   Column,
   CreateDateColumn,
