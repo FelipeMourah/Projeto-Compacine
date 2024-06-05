@@ -4,7 +4,7 @@ import { DataSource } from 'typeorm';
 
 const databasePath = path.resolve(
   __dirname,
-  '../../../../data/sqlite/compacine.sqlite',
+  './data/sqlite/compacine.sqlite',
 );
 
 const databaseDir = path.dirname(databasePath);
@@ -20,7 +20,7 @@ ensureDirectoryExistence(databaseDir);
 export const dataSource = new DataSource({
   type: 'sqlite',
   database: databasePath,
-  entities: [],
-  migrations: [],
-  synchronize: true,
+  entities: ['./src/modules/**/infra/typeorm/entities/*.ts'],
+  migrations: ['./src/shared/infra/typeorm/migrations/*.ts'],
+  synchronize: false,
 });

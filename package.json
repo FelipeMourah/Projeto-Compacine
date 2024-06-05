@@ -5,13 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules  src/shared/infra/http/app.ts",
+    "start": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules  src/shared/infra/http/app.ts",
     "lint": "eslint . --ext .ts",
     "lint-fix": "eslint . --ext .ts --fix",
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
-
   },
-  "keywords": ["Compacine", "node.js", "typescript"],
+  "keywords": [
+    "Compacine",
+    "node.js",
+    "typescript"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
