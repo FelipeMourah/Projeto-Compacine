@@ -1,10 +1,4 @@
-import {
-  MigrationInterface,
-  QueryRunner,
-  Table,
-  TableColumn,
-  TableForeignKey,
-} from 'typeorm';
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export class CreateTicket1717613945189 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -30,6 +24,10 @@ export class CreateTicket1717613945189 implements MigrationInterface {
             scale: 2,
           },
           {
+            name: 'session_id',
+            type: 'uuid',
+          },
+          {
             name: 'updated_at',
             type: 'timestamp without time zone',
             default: 'now()',
@@ -42,21 +40,19 @@ export class CreateTicket1717613945189 implements MigrationInterface {
         ],
         foreignKeys: [
           {
-            name: "session_id",
+            name: 'session_id_fk',
             referencedTableName: 'sessions',
             referencedColumnNames: ['id'],
             columnNames: ['session_id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
-          }
-        ]
+          },
+        ],
       }),
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropTable('tickets');
-    
-    
   }
 }
