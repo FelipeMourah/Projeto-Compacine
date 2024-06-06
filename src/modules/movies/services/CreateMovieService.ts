@@ -16,7 +16,7 @@ interface IRequest {
 @injectable()
 class CreateMovieService {
   constructor(
-    @inject('MoviesRepository')
+    @inject('MovieRepository')
     private moviesRepository: IMovieRepository,
   ) {}
 

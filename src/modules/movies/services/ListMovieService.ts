@@ -5,7 +5,7 @@ import { IMovieRepository } from '../domain/repositories/IMovieRepository';
 @injectable()
 class ListMovieService {
   constructor(
-    @inject('MoviesRepository')
+    @inject('MovieRepository')
     private moviesRepository: IMovieRepository,
   ) {}
 

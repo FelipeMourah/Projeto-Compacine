@@ -9,7 +9,7 @@ interface IRequest {
 @injectable()
 class DeleteMovieService {
   constructor(
-    @inject('MoviesRepository')
+    @inject('MovieRepository')
     private moviesRepository: IMovieRepository,
   ) {}
 

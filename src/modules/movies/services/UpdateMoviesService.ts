@@ -14,7 +14,7 @@ interface IRequest {
 }
 
 @injectable()
-class UpdateProductService {
+class UpdateMovieService {
   constructor(
     @inject('MovieRepository')
     private movieRepository: IMovieRepository,
@@ -48,4 +48,4 @@ class UpdateProductService {
   }
 }
 
-export default UpdateProductService;
+export default UpdateMovieService;
