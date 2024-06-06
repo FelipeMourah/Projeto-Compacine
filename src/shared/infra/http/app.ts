@@ -1,9 +1,11 @@
+import 'reflect-metadata';
 import InternalServerError from '@shared/errors/InternalServerError';
 import { errors } from 'celebrate';
 import cors from 'cors';
 import 'dotenv/config';
 import express from 'express';
 import 'express-async-errors';
+import '@shared/container';
 import { dataSource } from '../typeorm';
 import ErrorHandler from './middlewares/ErrorHandler';
 const PORT = process.env.PORT || 8000;
