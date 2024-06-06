@@ -1,7 +1,6 @@
 import { Repository } from 'typeorm';
 import Movie from '@modules/movies/infra/typeorm/entities/Movies';
 import { IMovieRepository } from '@modules/movies/domain/repositories/IMovieRepository';
-import { IMovies } from '@modules/movies/domain/models/IMovies';
 import { dataSource } from '@shared/infra/typeorm';
 import { ICreateMovie } from '@modules/movies/domain/models/ICreateMovie';
 
@@ -52,6 +51,15 @@ class MovieRepository implements IMovieRepository {
 
   public async remove(movie: Movie): Promise<void> {
     await this.ormRepository.remove(movie);
+  }
+
+  public async findByName(name: string): Promise<Movie | null> {
+    const movie = await this.ormRepository.findOne({ where: { name } });
+    return movie;
+  }
+
+  public async update(movie: Movie): Promise<Movie> {
+    return this.ormRepository.save(movie);
   }
 }
 
