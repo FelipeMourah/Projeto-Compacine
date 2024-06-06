@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import AppError from './AppError';
 
 export default function InternalServerError(
   error: Error,
@@ -6,10 +7,15 @@ export default function InternalServerError(
   response: Response,
   next: NextFunction,
 ): Response {
-  return response.status(500).json({
-    code: 500,
-    status: 'Internal Server Error',
-    message:
-      'The server has encountered a situation it does not know how to handle',
+  const serverError = new AppError(
+    500,
+    'Internal Server Error',
+    'The server has encountered a situation it does not know how to handle',
+  );
+  return response.status(serverError.code).json({
+    code: serverError.code,
+    status: serverError.status,
+    message: serverError.message,
+    details: serverError.details,
   });
 }

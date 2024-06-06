@@ -11,5 +11,6 @@ export default function ErrorHandler(
     code: error.code,
     status: error.status,
     message: error.message,
+    details: error.details,
   });
 }

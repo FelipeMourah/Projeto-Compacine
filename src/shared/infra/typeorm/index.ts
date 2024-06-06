@@ -5,7 +5,7 @@ import { DataSource } from 'typeorm';
 
 const databasePath = path.resolve(
   __dirname,
-  '../../../../data/sqlite/compacine.sqlite',
+  './data/sqlite/compacine.sqlite',
 );
 
 const databaseDir = path.dirname(databasePath);
