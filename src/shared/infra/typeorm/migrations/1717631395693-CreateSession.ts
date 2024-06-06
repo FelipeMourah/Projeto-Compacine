@@ -27,7 +27,7 @@ export class CreateSession1717631395693 implements MigrationInterface {
           },
           {
             name: 'day',
-            type: 'varchar',
+            type: 'date',
           },
           {
             name: 'time',
@@ -35,12 +35,12 @@ export class CreateSession1717631395693 implements MigrationInterface {
           },
           {
             name: 'created_at',
-            type: 'timestamp',
+            type: 'timestamp without time zone',
             default: 'now()',
           },
           {
             name: 'updated_at',
-            type: 'timestamp',
+            type: 'timestamp without time zone',
             default: 'now()',
           },
         ],
