@@ -1,9 +1,12 @@
-import { ISessions } from '../models/ISessions';
+import { ICreateSession } from '../models/ICreateSession';
+import { IFindSessionByRoomAndDateTime } from '../models/IFindSessionByRoomAndDateTime';
+import { ISession } from '../models/ISession';
 
 export interface ISessionsRepository {
-  findAll(): Promise<ISessions[]>;
-  findById(id: string): Promise<ISessions | null>;
-  create(data: ISessions): Promise<ISessions>;
-  save(session: ISessions): Promise<ISessions>;
-  remove(session: ISessions): Promise<void>;
+  findAll(): Promise<ISession[]>;
+  findById(id: string): Promise<ISession | null>;
+  findByRoomAndDateTime({room, day, time}: IFindSessionByRoomAndDateTime): Promise<ISession | null>;
+  create(data: ICreateSession): Promise<ISession>;
+  save(session: ISession): Promise<ISession>;
+  remove(session: ISession): Promise<void>;
 }
