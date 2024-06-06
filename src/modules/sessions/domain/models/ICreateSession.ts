@@ -1,4 +1,4 @@
-export interface ISession {
+export interface ICreateSession {
   room: string;
   capacity: number;
   day: Date;
