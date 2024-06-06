@@ -1,10 +1,9 @@
-import { ITickets } from "../models/ITickets";
+import { ITicket } from "../models/ITicket";
+import { ICreateTicket } from "../models/ICreateTicket";
 
 export interface ITicketsRepository {
-  findById(id: string): Promise<ITickets>;
-  findBySession(session_id: string): Promise<ITickets[]>;
-  findByChair(chair: string): Promise<ITickets>
-  createTicket(session_id: string): Promise<ITickets>;
-  updateTicket(id: string): Promise<ITickets>;
-  deleteTicket(id: string): Promise<ITickets>; 
+  findById(id: string): Promise<ITicket | null>;
+  createTicket({chair, value, session_id}: ICreateTicket): Promise<ITicket>;
+  updateTicket(ticket: ITicket): Promise<ITicket | null>;
+  deleteTicket(ticket: ITicket): Promise<void>; 
 }
