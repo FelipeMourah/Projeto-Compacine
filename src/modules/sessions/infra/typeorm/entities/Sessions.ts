@@ -8,10 +8,10 @@ import {
   JoinColumn,
 } from 'typeorm';
 import Movie from '@modules/movies/infra/typeorm/entities/Movies';
-import { ISessions } from '@modules/sessions/domain/models/ISessions';
+import { ISession } from '@modules/sessions/domain/models/ISession';
 
 @Entity('sessions')
-export class Session implements ISessions {
+export class Session implements ISession {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
