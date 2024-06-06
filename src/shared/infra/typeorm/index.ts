@@ -1,3 +1,4 @@
+import Movie from '@modules/movies/infra/typeorm/entities/Movies';
 import * as fs from 'fs';
 import * as path from 'path';
 import { DataSource } from 'typeorm';
@@ -20,7 +21,7 @@ ensureDirectoryExistence(databaseDir);
 export const dataSource = new DataSource({
   type: 'sqlite',
   database: databasePath,
-  entities: ['./src/modules/**/infra/typeorm/entities/*.ts'],
+  entities: [Movie],
   migrations: ['./src/shared/infra/typeorm/migrations/*.ts'],
   synchronize: false,
 });
