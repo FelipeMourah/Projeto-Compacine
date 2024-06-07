@@ -18,7 +18,7 @@ class Movie implements IMovies {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ length: 100 })
   description: string;
 
   @Column()

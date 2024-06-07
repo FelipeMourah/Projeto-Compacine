@@ -28,11 +28,15 @@ class CreateMovieService {
     genre,
     release_date,
     sessions,
-  }: IRequest): Promise<Movie | undefined> {
+  }: IRequest): Promise<Movie> {
     const movieExists = await this.moviesRepository.findByName(name);
 
     if (movieExists) {
       throw new AppError(400, 'Movie already exists', 'Movie already exists');
+    }
+
+    if (description.length > 100) {
+      throw new AppError(400, 'Description too long', 'Description too long');
     }
 
     const movie = await this.moviesRepository.create({
