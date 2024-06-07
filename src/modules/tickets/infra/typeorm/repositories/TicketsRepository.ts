@@ -1,10 +1,12 @@
 import { ITicketsRepository } from '@modules/tickets/domain/repositories/ITicketsRepository';
 import { dataSource } from '@shared/infra/typeorm';
-import Ticket from '../entities/Tickets';
 import { Repository } from 'typeorm';
 import { ICreateTicket } from '@modules/tickets/domain/models/ICreateTicket';
-import { IUpdateTicket } from '@modules/tickets/domain/models/IUpdateTicket';
 import { ITicket } from '@modules/tickets/domain/models/ITicket';
+import { IFindByIdAndSession } from '@modules/tickets/domain/models/IFindByIdAndSession';
+import { IFindByChairAndSession } from '@modules/tickets/domain/models/IFindByChairAndSession';
+import { IUpdateTicket } from '@modules/tickets/domain/models/IUpdateTicket';
+import { Ticket } from '../entities/Tickets';
 
 
 export class TicketsRepository implements ITicketsRepository {
@@ -13,30 +15,45 @@ export class TicketsRepository implements ITicketsRepository {
     this.ormRepository = dataSource.getRepository(Ticket);
   }
 
-  public async findById(id: string): Promise<ITicket | null> {
+  public async findById(id: string): Promise<Ticket | null> {
     const ticket = await this.ormRepository.findOne({ where: { id } });
     return ticket;
   }
 
-  public async createTicket({ chair, value, session_id }: ICreateTicket): Promise<ITicket> {
+  public async findByIdAndSession(
+    ticketInfos: IFindByIdAndSession,
+  ): Promise<Ticket | null> {
+    return null;
+  }
+
+  public async findByChairAndSession(
+    ticketInfos: IFindByChairAndSession,
+  ): Promise<Ticket | null> {
+    return null;
+  }
+
+  public async createTicket({
+    chair,
+    value,
+    session_id,
+  }: ICreateTicket): Promise<Ticket> {
     const ticket = this.ormRepository.create({
       chair,
       value,
-      session_id
+      session_id,
     });
-
     await this.ormRepository.save(ticket);
 
     return ticket;
   }
 
-  public async updateTicket(ticket: IUpdateTicket): Promise<ITicket | null> {
+  public async updateTicket(ticket: IUpdateTicket): Promise<Ticket | null> {
     const ticketSaved = await this.ormRepository.save(ticket);
 
     return ticketSaved;
   }
 
-  public async deleteTicket(ticket: ITicket): Promise<void> {
-    await this.ormRepository.remove(ticket)
+  public async deleteTicket(ticket: Ticket): Promise<void> {
+    await this.ormRepository.remove(ticket);
   }
 }
