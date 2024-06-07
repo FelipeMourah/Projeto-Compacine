@@ -1,8 +1,17 @@
-import sessionsRouter from '@modules/sessions/infra/http/routes/Sessions.routes';
+import sessionsRouter from '@modules/sessions/infra/http/routes/sessions.routes';
+import { Joi, Segments, celebrate } from 'celebrate';
 import { Router } from 'express';
 
 const routes = Router();
 
-routes.use('/movies/{movie_id}/sessions', sessionsRouter);
+routes.use(
+  '/movie/:movie_id/sessions',
+  celebrate({
+    [Segments.PARAMS]: {
+      movie_id: Joi.string().uuid().required(),
+    },
+  }),
+  sessionsRouter,
+);
 
 export default routes;
