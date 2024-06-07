@@ -15,14 +15,14 @@ class UpdateTicketService {
     private ormRepository: ITicketsRepository
   ) {}
 
-  public async execute(ticket: ITicket): Promise<ITicket| null> {
+  public async execute(ticket: IUpdateTicket): Promise<ITicket| null> {
     const ticketExists = await this.ormRepository.findById(ticket.id);
 
     if(!ticketExists) {
       throw new AppError(404, "", "");
     }
 
-    const ticketUpdated = await this.ormRepository.updateTicket(ticket)
+    const ticketUpdated = await this.ormRepository.updateTicket(ticketExists)
 
     return ticketUpdated;
   }
