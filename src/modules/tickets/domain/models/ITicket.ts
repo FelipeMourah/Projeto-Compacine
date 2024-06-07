@@ -1,7 +1,7 @@
 
 export interface ITicket {
   id: string;
-  session: string;
+  session_id: string;
   chair: string;
   value: number;
   created_at: Date;
