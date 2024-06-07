@@ -1,3 +1,4 @@
+import { IMovieRepository } from '@modules/movies/domain/repositories/IMovieRepository';
 import { ISession } from '@modules/sessions/domain/models/ISession';
 import { IShowSession } from '@modules/sessions/domain/models/IShowSession';
 import { ISessionsRepository } from '@modules/sessions/domain/repositories/ISessionsRepository';
@@ -9,8 +10,16 @@ class ShowSessionService {
   constructor(
     @inject('SessionsRepository')
     private sessionsRepository: ISessionsRepository,
+    @inject('MovieRepository')
+    private movieRepository: IMovieRepository,
   ) {}
-  public async execute({ id }: IShowSession): Promise<ISession> {
+  public async execute({ movie_id, id }: IShowSession): Promise<ISession> {
+    const movieExists = await this.movieRepository.findById(movie_id);
+
+    if (!movieExists) {
+      throw new AppError(404, 'Not Found', 'Movie not found.');
+    }
+
     const session = await this.sessionsRepository.findById(id);
 
     if (!session) {

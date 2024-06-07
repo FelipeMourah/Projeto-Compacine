@@ -1,6 +1,8 @@
 import Movie from '@modules/movies/infra/typeorm/entities/Movies';
-import { Session } from '@modules/sessions/infra/entities/Sessions';
+import { Session } from '@modules/sessions/infra/typeorm/entities/Sessions';
+
 import * as fs from 'fs';
+
 import * as path from 'path';
 import { DataSource } from 'typeorm';
 

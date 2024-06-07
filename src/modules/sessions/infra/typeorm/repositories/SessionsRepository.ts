@@ -1,9 +1,9 @@
+import { ICreateSession } from '@modules/sessions/domain/models/ICreateSession';
+import { IFindSessionByRoomAndDateTime } from '@modules/sessions/domain/models/IFindSessionByRoomAndDateTime';
 import { ISessionsRepository } from '@modules/sessions/domain/repositories/ISessionsRepository';
 import { dataSource } from '@shared/infra/typeorm';
 import { Repository } from 'typeorm';
 import { Session } from '../entities/Sessions';
-import { IFindSessionByRoomAndDateTime } from '@modules/sessions/domain/models/IFindSessionByRoomAndDateTime';
-import { ICreateSession } from '@modules/sessions/domain/models/ICreateSession';
 
 class SessionsRepository implements ISessionsRepository {
   private ormRepository: Repository<Session>;
@@ -21,12 +21,14 @@ class SessionsRepository implements ISessionsRepository {
   }
 
   public async create({
+    movie_id,
     room,
     capacity,
     day,
     time,
   }: ICreateSession): Promise<Session> {
     const session = await this.ormRepository.create({
+      movie_id,
       room,
       capacity,
       day,
@@ -53,12 +55,12 @@ class SessionsRepository implements ISessionsRepository {
     day,
     time,
   }: IFindSessionByRoomAndDateTime): Promise<Session | null> {
-   const session = await this.ormRepository.findOneBy({
+    const session = await this.ormRepository.findOneBy({
       room,
       day,
       time,
-   });
-    
+    });
+
     return session;
   }
 }
