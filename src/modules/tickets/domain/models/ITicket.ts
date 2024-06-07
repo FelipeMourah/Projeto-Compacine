@@ -1,8 +1,7 @@
-import { Session } from "@modules/sessions/infra/entities/Sessions";
 
 export interface ITicket {
   id: string;
-  session_id: Session;
+  session_id: string;
   chair: string;
   value: number;
   created_at: Date;

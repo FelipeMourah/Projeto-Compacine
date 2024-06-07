@@ -1,5 +1,6 @@
-import { Session } from '@modules/sessions/infra/entities/Sessions';
+import { Session } from '@modules/sessions/infra/typeorm/entities/Sessions';
 import { ITicket } from '@modules/tickets/domain/models/ITicket';
+
 import {
   Column,
   CreateDateColumn,
@@ -12,13 +13,16 @@ import {
 
 
 @Entity('tickets')
-class Ticket implements ITicket {
+export class Ticket implements ITicket {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column('uuid')
+  session_id: string;
+
   @ManyToOne(() => Session)
-  @JoinColumn({name: 'customer_id'})
-  session_id: Session;
+  @JoinColumn({name: 'session_id'})
+  session: Session
 
   @Column()
   chair: string;
@@ -32,5 +36,3 @@ class Ticket implements ITicket {
   @UpdateDateColumn()
   updated_at: Date;
 }
-
-export default Ticket;
