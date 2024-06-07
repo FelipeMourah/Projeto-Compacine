@@ -1,7 +1,6 @@
 import { ISession } from "@modules/sessions/domain/models/ISession";
 
-export interface ICreateTicket {
+export interface IFindByChairAndSession {
   chair: string;
-  value: number;
   session_id: string;
 }
