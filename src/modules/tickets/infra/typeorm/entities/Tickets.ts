@@ -1,8 +1,10 @@
-import { ITickets } from '@modules/tickets/domain/models/ITickets';
+import { Session } from '@modules/sessions/infra/entities/Sessions';
+import { ITicket } from '@modules/tickets/domain/models/ITicket';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -10,12 +12,13 @@ import {
 
 
 @Entity('tickets')
-class Ticket implements ITickets {
+class Ticket implements ITicket {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  // @ManyToOne(() => Session, (session_id) => session_id.tickets)
-  // session_id: Session
+  @ManyToOne(() => Session)
+  @JoinColumn({name: 'customer_id'})
+  session_id: Session;
 
   @Column()
   chair: string;
