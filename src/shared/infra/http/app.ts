@@ -1,22 +1,23 @@
-import 'reflect-metadata';
-import InternalServerError from '@shared/errors/InternalServerError';
+import '@shared/container';
 import { errors } from 'celebrate';
 import cors from 'cors';
 import 'dotenv/config';
 import express from 'express';
 import 'express-async-errors';
-import '@shared/container';
+import 'reflect-metadata';
 import { dataSource } from '../typeorm';
 import ErrorHandler from './middlewares/ErrorHandler';
+import routes from './routes';
 const PORT = process.env.PORT || 8000;
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 
+app.use('/api/v1', routes);
+
 app.use(errors());
 app.use(ErrorHandler);
-app.use(InternalServerError);
 
 dataSource.initialize().then(() => {
   app.listen(PORT, () => {
