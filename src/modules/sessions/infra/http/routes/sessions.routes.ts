@@ -12,7 +12,6 @@ sessionsRouter.get(
   celebrate({
     [Segments.PARAMS]: {
       id: Joi.string().uuid().required(),
-      movie_id: Joi.string().uuid().required(),
     },
   }),
   sessionController.show,
@@ -21,9 +20,6 @@ sessionsRouter.get(
 sessionsRouter.post(
   '/',
   celebrate({
-    [Segments.PARAMS]: {
-      movie_id: Joi.string().uuid().required(),
-    },
     [Segments.BODY]: {
       room: Joi.string().required(),
       capacity: Joi.number().required(),
@@ -38,7 +34,6 @@ sessionsRouter.put(
   '/:id',
   celebrate({
     [Segments.PARAMS]: {
-      movie_id: Joi.string().uuid().required(),
       id: Joi.string().uuid().required(),
     },
     [Segments.BODY]: {
@@ -55,7 +50,6 @@ sessionsRouter.delete(
   '/:id',
   celebrate({
     [Segments.PARAMS]: {
-      movie_id: Joi.string().uuid().required(),
       id: Joi.string().uuid().required(),
     },
   }),
