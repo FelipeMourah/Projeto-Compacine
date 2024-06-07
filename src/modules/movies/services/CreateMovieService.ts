@@ -32,7 +32,7 @@ class CreateMovieService {
     const movieExists = await this.moviesRepository.findByName(name);
 
     if (movieExists) {
-      throw new AppError(400, 'Movie already exists', 'Movie already exists');
+      throw new AppError(400, 'Bad Request', 'Movie already exists');
     }
 
     const movie = await this.moviesRepository.create({
