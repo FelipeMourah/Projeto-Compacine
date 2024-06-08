@@ -28,7 +28,6 @@ class CreateSessionsService {
     }
 
     const sessionExists = await this.sessionRepository.findByRoomAndDateTime({
-      movie_id,
       room,
       day,
       time,

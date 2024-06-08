@@ -34,7 +34,6 @@ export default class SessionController {
     const { movie_id } = request.params;
     // console.log('')
     const { room, capacity, day, time } = request.body;
-
     const createSession = container.resolve(CreateSessionsService);
 
     const session = await createSession.execute({
