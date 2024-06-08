@@ -24,8 +24,7 @@ export class MovieController {
   }
 
   public async create(req: Request, res: Response): Promise<Response> {
-    const { image, name, description, actors, genre, release_date, sessions } =
-      req.body;
+    const { image, name, description, actors, genre, release_date } = req.body;
     const createMovie = container.resolve(CreateMovieService);
     const movie = await createMovie.execute({
       image,
@@ -34,7 +33,6 @@ export class MovieController {
       actors,
       genre,
       release_date,
-      sessions,
     });
 
     return res.json(movie);
@@ -42,8 +40,7 @@ export class MovieController {
 
   public async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const { image, name, description, actors, genre, release_date, sessions } =
-      req.body;
+    const { image, name, description, actors, genre, release_date } = req.body;
     const updateMovie = container.resolve(UpdateMovieService);
     const movie = await updateMovie.execute({
       id,
@@ -53,7 +50,6 @@ export class MovieController {
       actors,
       genre,
       release_date,
-      sessions,
     });
 
     return res.json(movie);

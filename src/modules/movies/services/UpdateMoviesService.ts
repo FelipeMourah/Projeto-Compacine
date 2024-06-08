@@ -10,7 +10,6 @@ interface IRequest {
   actors: string;
   genre: string;
   release_date: string;
-  sessions: string;
 }
 
 @injectable()
@@ -28,7 +27,6 @@ class UpdateMovieService {
     actors,
     genre,
     release_date,
-    sessions,
   }: IRequest): Promise<void> {
     const movie = await this.movieRepository.findById(id);
 
@@ -42,7 +40,6 @@ class UpdateMovieService {
     movie.actors = actors;
     movie.genre = genre;
     movie.release_date = release_date;
-    movie.sessions = sessions;
 
     await this.movieRepository.save(movie);
   }

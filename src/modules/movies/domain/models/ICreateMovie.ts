@@ -5,5 +5,4 @@ export interface ICreateMovie {
   actors: string;
   genre: string;
   release_date: string;
-  sessions: string;
 }

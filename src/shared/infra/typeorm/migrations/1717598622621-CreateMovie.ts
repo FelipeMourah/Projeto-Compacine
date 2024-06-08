@@ -38,17 +38,13 @@ export class CreateMovie1717598622621 implements MigrationInterface {
             type: 'timestamp',
           },
           {
-            name: 'sessions',
-            type: 'text',
-          },
-          {
             name: 'created_at',
-            type: 'timestamp',
+            type: 'timestamp without time zone',
             default: 'now()',
           },
           {
             name: 'updated_at',
-            type: 'timestamp',
+            type: 'timestamp without time zone',
             default: 'now()',
           },
         ],
