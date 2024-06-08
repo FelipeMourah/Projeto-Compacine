@@ -22,6 +22,16 @@ moviesRouter.get(
 );
 
 moviesRouter.post(
+  '/movies/:movie_id',
+  celebrate({
+    [Segments.PARAMS]: {
+      movie_id: Joi.string().uuid().required(),
+    },
+  }),
+  sessionsRouter,
+);
+
+moviesRouter.post(
   '/',
   celebrate({
     [Segments.BODY]: {
@@ -66,5 +76,7 @@ moviesRouter.delete(
   }),
   moviesController.delete,
 );
+
+moviesRouter.use('*/sessions', sessionsRouter)
 
 export default moviesRouter;
