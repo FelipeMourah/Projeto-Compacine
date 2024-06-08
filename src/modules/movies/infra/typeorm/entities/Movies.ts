@@ -24,7 +24,7 @@ class Movie implements IMovies {
   description: string;
 
   @Column('text')
-  actors: string;
+  actors: string[];
 
   @Column()
   genre: string;
@@ -33,7 +33,7 @@ class Movie implements IMovies {
   release_date: string;
 
   @OneToMany(() => Session, session => session.movie)
-  sessions: string[];
+  sessions: Session[];
 
   @CreateDateColumn()
   created_at: Date;
