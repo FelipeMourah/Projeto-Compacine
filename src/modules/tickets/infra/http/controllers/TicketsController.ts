@@ -7,19 +7,19 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
 class TicketsController {
-  public async index(request: Request, response: Response): Promise<Response> {
-    const { movie_id, session_id } = request.params;
+  public async index(request: Request, response: Response): Promise<void> {
+    // const { movie_id, session_id } = request.params;
     
 
-    return response.json(instanceToInstance(ticket));
+    // return response.json(instanceToInstance(ticket));
   }
 
-  public async show(request: Request, response: Response): Promise<Response> {
-    const { movie_id, session_id } = request.params;
+  public async show(request: Request, response: Response): Promise<void> {
+    // const { movie_id, session_id } = request.params;
     
-    const 
+    // const 
 
-    return response.json(instanceToInstance(ticket));
+    // return response.json(instanceToInstance(ticket));
   }
 
 

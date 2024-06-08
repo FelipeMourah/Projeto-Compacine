@@ -10,5 +10,4 @@ routes.use('/movies', sessionsRouter);
  
 routes.use('/movies', ticketRouter);
  
- 
 export default routes;
