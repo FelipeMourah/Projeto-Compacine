@@ -33,7 +33,6 @@ export default class SessionController {
   public async create(request: Request, response: Response): Promise<Response> {
     const { movie_id } = request.params;
     const { room, capacity, day, time } = request.body;
-
     const createSession = container.resolve(CreateSessionsService);
 
     const session = await createSession.execute({
