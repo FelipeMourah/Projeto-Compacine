@@ -18,7 +18,7 @@ sessionsRouter.get(
 );
 
 sessionsRouter.post(
-  '/',
+  '/movies/:movie:id/sessions',
   celebrate({
     [Segments.BODY]: {
       room: Joi.string().required(),
@@ -26,6 +26,9 @@ sessionsRouter.post(
       day: Joi.date().required(),
       time: Joi.string().required(),
     },
+    [Segments.PARAMS]: {
+      movie_id: Joi.string().required(),
+    }
   }),
   sessionController.create,
 );
