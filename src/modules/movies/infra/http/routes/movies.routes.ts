@@ -2,9 +2,12 @@ import { container } from 'tsyringe';
 import { Router } from 'express';
 import { MovieController } from '../controllers/MoviesController';
 import { Joi, Segments, celebrate } from 'celebrate';
+import sessionsRouter from '@modules/sessions/infra/http/routes/sessions.routes';
 
 const moviesRouter = Router();
 const moviesController = container.resolve(MovieController);
+
+// moviesRouter.use('*/sessions', sessionsRouter);
 
 moviesRouter.get('/', moviesController.index);
 

@@ -3,6 +3,7 @@ import DeleteMovieService from '@modules/movies/services/DeleteMovieService';
 import ListMovieService from '@modules/movies/services/ListMovieService';
 import ShowOneMovieService from '@modules/movies/services/ShowOneMovieService';
 import UpdateMovieService from '@modules/movies/services/UpdateMoviesService';
+import { instanceToInstance } from 'class-transformer';
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
@@ -12,7 +13,7 @@ export class MovieController {
 
     const movies = await listMovie.execute();
 
-    return res.json(movies);
+    return res.json(instanceToInstance(movies));
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
@@ -20,7 +21,7 @@ export class MovieController {
     const showMovie = container.resolve(ShowOneMovieService);
     const movie = await showMovie.execute(id);
 
-    return res.json(movie);
+    return res.json(instanceToInstance(movie));
   }
 
   public async create(req: Request, res: Response): Promise<Response> {
@@ -35,7 +36,7 @@ export class MovieController {
       release_date,
     });
 
-    return res.json(movie);
+    return res.status(201).json(instanceToInstance(movie));
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
@@ -52,7 +53,7 @@ export class MovieController {
       release_date,
     });
 
-    return res.json(movie);
+    return res.status(201).json(instanceToInstance(movie));
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {
@@ -60,6 +61,6 @@ export class MovieController {
     const deleteMovie = container.resolve(DeleteMovieService);
     await deleteMovie.execute({ id });
 
-    return res.json({ id });
+    return res.status(204).json();
   }
 }

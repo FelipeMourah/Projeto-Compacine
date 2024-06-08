@@ -6,7 +6,27 @@ const ticketsController = new TicketsController();
 
 const ticketRouter = Router();
 
-ticketRouter.post('/', celebrate({
+ticketRouter.get('/:movie_id/sessions/:session_id/tickets', celebrate({
+  [Segments.PARAMS]: {
+    session_id: Joi.string().uuid().required(),
+    movie_id: Joi.string().uuid().required()
+  }
+}), ticketsController.index);
+
+ticketRouter.get('/:movie_id/sessions/:session_id/tickets', celebrate({
+  [Segments.BODY]: {
+    chair: Joi.string().required(),
+    value: Joi.number().precision(2).unsafe().required()
+  },
+  [Segments.PARAMS]: {
+    session_id: Joi.string().uuid().required(),
+    movie_id: Joi.string().uuid().required(),
+    id: Joi.string().uuid().required(),
+
+  }
+}), ticketsController.show);
+
+ticketRouter.post('/:movie_id/sessions/:session_id/tickets', celebrate({
   [Segments.BODY]: {
     chair: Joi.string().required(),
     value: Joi.number().precision(2).unsafe().required()
@@ -17,7 +37,7 @@ ticketRouter.post('/', celebrate({
   }
 }), ticketsController.create);
 
-ticketRouter.put('/', celebrate({
+ticketRouter.put('/:movie_id/sessions/:session_id/tickets/:id', celebrate({
   [Segments.BODY]: {
     chair: Joi.string().required(),
     value: Joi.number().precision(2).unsafe().required()
@@ -29,7 +49,7 @@ ticketRouter.put('/', celebrate({
   }
 }), ticketsController.update);
 
-ticketRouter.delete('/', celebrate({
+ticketRouter.delete('/:movie_id/sessions/:session_id/tickets/:id', celebrate({
   [Segments.PARAMS]: {
     id: Joi.string().uuid().required(),
   }

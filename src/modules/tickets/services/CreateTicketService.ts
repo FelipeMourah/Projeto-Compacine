@@ -19,7 +19,7 @@ class CreateTicketService {
         const ticketExists = await this.ticketsRepository.findByChairAndSession({chair, session_id});
 
         if (ticketExists) {
-            throw new AppError(231, "dsadasdsa", "This ticket is already created", [`session_id: ${session_id}`,`chair: ${chair}`]);
+            throw new AppError(400, "Bad Request", "This ticket is already created", [`session_id: ${session_id}`,`chair: ${chair}`]);
         }
 
         const ticket = await this.ticketsRepository.createTicket({   

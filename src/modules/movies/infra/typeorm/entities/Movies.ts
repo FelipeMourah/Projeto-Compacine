@@ -1,5 +1,6 @@
 import { IMovies } from '@modules/movies/domain/models/IMovies';
 import { Session } from '@modules/sessions/infra/typeorm/entities/Sessions';
+import { Exclude } from 'class-transformer';
 import {
   Column,
   CreateDateColumn,
@@ -35,9 +36,11 @@ class Movie implements IMovies {
   @OneToMany(() => Session, session => session.movie)
   sessions: Session[];
 
+  @Exclude()
   @CreateDateColumn()
   created_at: Date;
 
+  @Exclude()
   @UpdateDateColumn()
   updated_at: Date;
 }
