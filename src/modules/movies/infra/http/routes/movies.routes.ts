@@ -2,9 +2,12 @@ import { container } from 'tsyringe';
 import { Router } from 'express';
 import { MovieController } from '../controllers/MoviesController';
 import { Joi, Segments, celebrate } from 'celebrate';
+import sessionsRouter from '@modules/sessions/infra/http/routes/sessions.routes';
 
 const moviesRouter = Router();
 const moviesController = container.resolve(MovieController);
+
+// moviesRouter.use('*/sessions', sessionsRouter);
 
 moviesRouter.get('/', moviesController.index);
 
@@ -16,6 +19,16 @@ moviesRouter.get(
     },
   }),
   moviesController.show,
+);
+
+moviesRouter.post(
+  '/movies/:movie_id',
+  celebrate({
+    [Segments.PARAMS]: {
+      movie_id: Joi.string().uuid().required(),
+    },
+  }),
+  sessionsRouter,
 );
 
 moviesRouter.post(
@@ -63,5 +76,7 @@ moviesRouter.delete(
   }),
   moviesController.delete,
 );
+
+moviesRouter.use('*/sessions', sessionsRouter)
 
 export default moviesRouter;

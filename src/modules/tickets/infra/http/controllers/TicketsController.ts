@@ -1,11 +1,28 @@
 import CreateTicketService from '@modules/tickets/services/CreateTicketService';
 import DeleteTicketService from '@modules/tickets/services/DeleteTicketService';
 import UpdateTicketService from '@modules/tickets/services/UpdateTicketService';
+import { instanceToInstance } from 'class-transformer';
 import { Request, Response } from 'express';
 
 import { container } from 'tsyringe';
 
 class TicketsController {
+  public async index(request: Request, response: Response): Promise<void> {
+    // const { movie_id, session_id } = request.params;
+    
+
+    // return response.json(instanceToInstance(ticket));
+  }
+
+  public async show(request: Request, response: Response): Promise<void> {
+    // const { movie_id, session_id } = request.params;
+    
+    // const 
+
+    // return response.json(instanceToInstance(ticket));
+  }
+
+
   public async create(request: Request, response: Response): Promise<Response> {
     const { session_id } = request.params;
     const { chair, value } = request.body;
@@ -18,7 +35,7 @@ class TicketsController {
       chair,
     });
 
-    return response.json(ticket);
+    return response.status(201).json(instanceToInstance(ticket));
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
@@ -34,7 +51,7 @@ class TicketsController {
       value
     });
 
-    return response.json(product);
+    return response.status(201).json(instanceToInstance(product));
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {
@@ -44,7 +61,7 @@ class TicketsController {
 
     await deleteCustomer.execute({ id, session_id });
 
-    return response.json([]);
+    return response.status(204).json();
   }
 }
 export default TicketsController;

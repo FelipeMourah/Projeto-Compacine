@@ -7,6 +7,7 @@ import ShowSessionService from '../../services/ShowSessionService';
 import UpdateSessionService from '../../services/UpdateSessionService';
 
 import { container } from 'tsyringe';
+import { instanceToInstance } from 'class-transformer';
 
 export default class SessionController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -16,7 +17,7 @@ export default class SessionController {
 
     const sessions = await listSessions.execute(movie_id);
 
-    return response.json(sessions);
+    return response.json(instanceToInstance(sessions));
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
@@ -27,11 +28,12 @@ export default class SessionController {
 
     const session = await showSession.execute({ movie_id, id });
 
-    return response.json(session);
+    return response.json(instanceToInstance(session));
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
     const { movie_id } = request.params;
+    // console.log('')
     const { room, capacity, day, time } = request.body;
     const createSession = container.resolve(CreateSessionsService);
 
@@ -43,7 +45,7 @@ export default class SessionController {
       time,
     });
 
-    return response.status(201).json(session);
+    return response.status(201).json(instanceToInstance(session));
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
@@ -62,7 +64,7 @@ export default class SessionController {
       time,
     });
 
-    return response.status(201).json(session);
+    return response.status(201).json(instanceToInstance(session));
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {

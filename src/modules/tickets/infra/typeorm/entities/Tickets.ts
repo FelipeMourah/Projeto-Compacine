@@ -1,5 +1,6 @@
 import { Session } from '@modules/sessions/infra/typeorm/entities/Sessions';
 import { ITicket } from '@modules/tickets/domain/models/ITicket';
+import { Exclude } from 'class-transformer';
 
 import {
   Column,
@@ -30,9 +31,11 @@ export class Ticket implements ITicket {
   @Column()
   value: number
 
+  @Exclude()
   @CreateDateColumn()
   created_at: Date;
 
+  @Exclude()
   @UpdateDateColumn()
   updated_at: Date;
 }

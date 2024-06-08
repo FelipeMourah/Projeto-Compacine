@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import Movie from '@modules/movies/infra/typeorm/entities/Movies';
 import { ISession } from '@modules/sessions/domain/models/ISession';
+import { Exclude } from 'class-transformer';
 
 @Entity('sessions')
 export class Session implements ISession {
@@ -34,9 +35,11 @@ export class Session implements ISession {
   @Column()
   time: string;
 
+  @Exclude()
   @CreateDateColumn()
   created_at: Date;
 
+  @Exclude()
   @UpdateDateColumn()
   updated_at: Date;
 }
