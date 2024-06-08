@@ -1,3 +1,4 @@
+import moviesRouter from '@modules/movies/infra/http/routes/movies.routes';
 import sessionsRouter from '@modules/sessions/infra/http/routes/sessions.routes';
 import { Joi, Segments, celebrate } from 'celebrate';
 import { Router } from 'express';
@@ -13,5 +14,7 @@ routes.use(
   }),
   sessionsRouter,
 );
+
+routes.use('/movies', moviesRouter);
 
 export default routes;
