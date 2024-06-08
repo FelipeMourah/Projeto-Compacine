@@ -6,7 +6,7 @@ export interface IMovies {
   actors: string;
   genre: string;
   release_date: string;
-  sessions: string;
+  sessions: any[];
   created_at: Date;
   updated_at: Date;
 }

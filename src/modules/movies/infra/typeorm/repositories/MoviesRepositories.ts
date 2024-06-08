@@ -12,12 +12,15 @@ class MovieRepository implements IMovieRepository {
   }
 
   public async findById(id: string): Promise<Movie | null> {
-    const movie = await this.ormRepository.findOne({ where: { id } });
+    const movie = await this.ormRepository.findOne({
+      where: { id },
+      relations: ['sessions'],
+    });
     return movie;
   }
 
   public async findAll(): Promise<Movie[]> {
-    const movies = await this.ormRepository.find();
+    const movies = await this.ormRepository.find({ relations: ['sessions'] });
     return movies;
   }
 
@@ -28,7 +31,6 @@ class MovieRepository implements IMovieRepository {
     actors,
     genre,
     release_date,
-    sessions,
   }: ICreateMovie): Promise<Movie> {
     const movie = this.ormRepository.create({
       image,
@@ -37,7 +39,6 @@ class MovieRepository implements IMovieRepository {
       actors,
       genre,
       release_date,
-      sessions,
     });
     await this.ormRepository.save(movie);
     return movie;

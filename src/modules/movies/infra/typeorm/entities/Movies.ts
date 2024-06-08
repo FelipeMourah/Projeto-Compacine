@@ -1,8 +1,10 @@
 import { IMovies } from '@modules/movies/domain/models/IMovies';
+import { Session } from '@modules/sessions/infra/typeorm/entities/Sessions';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -21,7 +23,7 @@ class Movie implements IMovies {
   @Column()
   description: string;
 
-  @Column()
+  @Column('text')
   actors: string;
 
   @Column()
@@ -30,8 +32,8 @@ class Movie implements IMovies {
   @Column({ type: 'date' })
   release_date: string;
 
-  @Column()
-  sessions: string;
+  @OneToMany(() => Session, session => session.movie)
+  sessions: string[];
 
   @CreateDateColumn()
   created_at: Date;
