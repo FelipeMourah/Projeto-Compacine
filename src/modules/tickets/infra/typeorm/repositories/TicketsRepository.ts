@@ -8,7 +8,6 @@ import { IFindByChairAndSession } from '@modules/tickets/domain/models/IFindByCh
 import { IUpdateTicket } from '@modules/tickets/domain/models/IUpdateTicket';
 import { Ticket } from '../entities/Tickets';
 
-
 export class TicketsRepository implements ITicketsRepository {
   private ormRepository: Repository<Ticket>;
   constructor() {
@@ -20,16 +19,44 @@ export class TicketsRepository implements ITicketsRepository {
     return ticket;
   }
 
+  public async findAll(): Promise<Ticket[] | null> {
+    const tickets = await this.ormRepository.find({});
+    return tickets;
+  }
+
+  public async findBySession(session_id: string): Promise<ITicket[] | null> {
+    const ticketsOfSession = await this.ormRepository.find({
+      where: {
+        session_id,
+      },
+    });
+
+    return ticketsOfSession;
+  }
+
   public async findByIdAndSession(
     ticketInfos: IFindByIdAndSession,
   ): Promise<Ticket | null> {
-    return null;
+    const ticket = await this.ormRepository.findOne({
+      where: {
+        id: ticketInfos.id,
+        session_id: ticketInfos.session_id
+      }
+    })
+    return ticket;
   }
 
   public async findByChairAndSession(
     ticketInfos: IFindByChairAndSession,
   ): Promise<Ticket | null> {
-    return null;
+    const ticket = await this.ormRepository.findOne({
+      where: {
+        chair: ticketInfos.chair,
+        session_id: ticketInfos.session_id,
+      }
+    })
+
+    return ticket;
   }
 
   public async createTicket({

@@ -6,6 +6,7 @@ import { IUpdateTicket } from "../models/IUpdateTicket";
 
 export interface ITicketsRepository {
   findById(id: string): Promise<ITicket | null>;
+  findAll(): Promise<ITicket[] | null>;
   findByIdAndSession(ticketInfos: IFindByIdAndSession): Promise<ITicket | null>
   findByChairAndSession(ticketInfos: IFindByChairAndSession): Promise<ITicket | null>
   createTicket({chair, value, session_id}: ICreateTicket): Promise<ITicket>;
