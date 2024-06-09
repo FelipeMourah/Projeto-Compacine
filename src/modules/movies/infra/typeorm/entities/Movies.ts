@@ -1,6 +1,6 @@
 import { IMovies } from '@modules/movies/domain/models/IMovies';
 import { Session } from '@modules/sessions/infra/typeorm/entities/Sessions';
-import { Exclude } from 'class-transformer';
+import { Exclude, Transform } from 'class-transformer';
 import {
   Column,
   CreateDateColumn,
@@ -24,7 +24,13 @@ class Movie implements IMovies {
   @Column()
   description: string;
 
-  @Column('text')
+  @Column({
+    type: 'text',
+    transformer: {
+      to: (value: string[]) => JSON.stringify(value),
+      from: (value: string) => JSON.parse(value),
+    },
+  })
   actors: string;
 
   @Column()
