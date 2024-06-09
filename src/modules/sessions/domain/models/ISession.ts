@@ -3,7 +3,7 @@ export interface ISession {
   movie_id: string;
   room: string;
   capacity: number;
-  day: string;
+  day: Date;
   time: string;
   created_at: Date;
   updated_at: Date;
