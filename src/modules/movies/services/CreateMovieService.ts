@@ -29,7 +29,7 @@ class CreateMovieService {
       image,
       name,
       description,
-      actors: JSON.stringify(actors),
+      actors,
       genre,
       release_date,
     });
