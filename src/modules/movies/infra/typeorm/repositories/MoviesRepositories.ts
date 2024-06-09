@@ -20,7 +20,7 @@ class MovieRepository implements IMovieRepository {
   }
 
   public async findAll(): Promise<Movie[]> {
-    const movies = await this.ormRepository.find({ relations: ['sessions'] });
+    const movies = await this.ormRepository.find({ relations: ['sessions', 'sessions.tickets'] });
     return movies;
   }
 

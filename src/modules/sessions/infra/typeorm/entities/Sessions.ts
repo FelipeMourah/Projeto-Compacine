@@ -1,15 +1,17 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
 import Movie from '@modules/movies/infra/typeorm/entities/Movies';
 import { ISession } from '@modules/sessions/domain/models/ISession';
+import { Ticket } from '@modules/tickets/infra/typeorm/entities/Tickets';
 import { Exclude } from 'class-transformer';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('sessions')
 export class Session implements ISession {
@@ -22,6 +24,9 @@ export class Session implements ISession {
   @ManyToOne(() => Movie)
   @JoinColumn({ name: 'movie_id' })
   movie: Movie;
+
+  @OneToMany(() => Ticket, ticket => ticket.session)
+  tickets: Ticket[];
 
   @Column()
   room: string;
