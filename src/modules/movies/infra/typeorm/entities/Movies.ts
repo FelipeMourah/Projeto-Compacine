@@ -26,6 +26,7 @@ class Movie implements IMovies {
 
   @Column('text')
   @Transform(({ value }) => JSON.parse(value), { toClassOnly: true })
+
   actors: string;
 
   @Column()
