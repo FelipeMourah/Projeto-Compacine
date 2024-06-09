@@ -37,7 +37,7 @@ class UpdateMovieService {
     movie.image = image;
     movie.name = name;
     movie.description = description;
-    movie.actors = actors;
+    movie.actors = JSON.stringify(actors);
     movie.genre = genre;
     movie.release_date = release_date;
 
