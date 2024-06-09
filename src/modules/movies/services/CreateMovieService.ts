@@ -1,16 +1,8 @@
+import AppError from '@shared/errors/AppError';
 import { inject, injectable } from 'tsyringe';
+import { ICreateMovie } from '../domain/models/ICreateMovie';
 import { IMovieRepository } from '../domain/repositories/IMovieRepository';
 import Movie from '../infra/typeorm/entities/Movies';
-import AppError from '@shared/errors/AppError';
-
-interface IRequest {
-  image: string;
-  name: string;
-  description: string;
-  actors: string;
-  genre: string;
-  release_date: string;
-}
 
 @injectable()
 class CreateMovieService {
@@ -26,7 +18,7 @@ class CreateMovieService {
     actors,
     genre,
     release_date,
-  }: IRequest): Promise<Movie | undefined> {
+  }: ICreateMovie): Promise<Movie> {
     const movieExists = await this.moviesRepository.findByName(name);
 
     if (movieExists) {
