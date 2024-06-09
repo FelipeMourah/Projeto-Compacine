@@ -59,7 +59,7 @@ moviesRouter.put(
         .required(),
       name: Joi.string().required(),
       description: Joi.string().required(),
-      actors: Joi.array().required(),
+      actors: Joi.string().required(),
       genre: Joi.string().required(),
       release_date: Joi.date().required(),
     },
@@ -77,6 +77,6 @@ moviesRouter.delete(
   moviesController.delete,
 );
 
-moviesRouter.use('*/sessions', sessionsRouter);
+moviesRouter.use('*/sessions', sessionsRouter)
 
 export default moviesRouter;
