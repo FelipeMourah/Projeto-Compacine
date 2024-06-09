@@ -3,6 +3,7 @@ import { ICreateSession } from '@modules/sessions/domain/models/ICreateSession';
 import { ISession } from '@modules/sessions/domain/models/ISession';
 import { ISessionsRepository } from '@modules/sessions/domain/repositories/ISessionsRepository';
 import AppError from '@shared/errors/AppError';
+import { isBefore, parseISO } from 'date-fns';
 import { inject, injectable } from 'tsyringe';
 
 @injectable()
@@ -25,6 +26,17 @@ class CreateSessionsService {
 
     if (!movieExists) {
       throw new AppError(404, 'Not Found', 'Movie not found.');
+    }
+
+    const sessionDate = parseISO(day.toISOString());
+    const today = new Date();
+
+    if (isBefore(sessionDate, today)) {
+      throw new AppError(
+        400,
+        'Bad Request',
+        'The date informed is already passed',
+      );
     }
 
     const sessionExists = await this.sessionRepository.findByRoomAndDateTime({
