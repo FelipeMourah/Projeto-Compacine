@@ -12,10 +12,13 @@ class SessionsRepository implements ISessionsRepository {
   }
 
   public async findAll(): Promise<Session[]> {
-    return await this.ormRepository.find();
+    return await this.ormRepository.find({ relations: ['tickets'] });
   }
   public async findById(id: string): Promise<Session | null> {
-    const session = await this.ormRepository.findOneBy({ id });
+    const session = await this.ormRepository.findOne({
+      where: { id },
+      relations: ['tickets'],
+    });
 
     return session;
   }

@@ -7,8 +7,6 @@ import sessionsRouter from '@modules/sessions/infra/http/routes/sessions.routes'
 const moviesRouter = Router();
 const moviesController = container.resolve(MovieController);
 
-// moviesRouter.use('*/sessions', sessionsRouter);
-
 moviesRouter.get('/', moviesController.index);
 
 moviesRouter.get(
@@ -19,16 +17,6 @@ moviesRouter.get(
     },
   }),
   moviesController.show,
-);
-
-moviesRouter.post(
-  '/movies/:movie_id',
-  celebrate({
-    [Segments.PARAMS]: {
-      movie_id: Joi.string().uuid().required(),
-    },
-  }),
-  sessionsRouter,
 );
 
 moviesRouter.post(
