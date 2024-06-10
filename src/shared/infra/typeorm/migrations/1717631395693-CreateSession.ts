@@ -33,16 +33,6 @@ export class CreateSession1717631395693 implements MigrationInterface {
             name: 'time',
             type: 'varchar',
           },
-          {
-            name: 'created_at',
-            type: 'timestamp without time zone',
-            default: 'now()',
-          },
-          {
-            name: 'updated_at',
-            type: 'timestamp without time zone',
-            default: 'now()',
-          },
         ],
         foreignKeys: [
           {

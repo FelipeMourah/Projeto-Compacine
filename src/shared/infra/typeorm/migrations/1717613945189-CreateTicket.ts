@@ -27,16 +27,6 @@ export class CreateTicket1717613945189 implements MigrationInterface {
             name: 'session_id',
             type: 'uuid',
           },
-          {
-            name: 'updated_at',
-            type: 'timestamp without time zone',
-            default: 'now()',
-          },
-          {
-            name: 'created_at',
-            type: 'timestamp without time zone',
-            default: 'now()',
-          },
         ],
         foreignKeys: [
           {

@@ -5,6 +5,4 @@ export interface ISession {
   capacity: number;
   day: Date | string;
   time: string;
-  created_at: Date;
-  updated_at: Date;
 }
