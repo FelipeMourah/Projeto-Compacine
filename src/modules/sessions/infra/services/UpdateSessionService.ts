@@ -3,7 +3,7 @@ import { ISession } from '@modules/sessions/domain/models/ISession';
 import { IUpdateSession } from '@modules/sessions/domain/models/IUpdateSession';
 import { ISessionsRepository } from '@modules/sessions/domain/repositories/ISessionsRepository';
 import AppError from '@shared/errors/AppError';
-import { isBefore, parseISO } from 'date-fns';
+import { format, isBefore, parseISO } from 'date-fns';
 import { inject, injectable } from 'tsyringe';
 
 @injectable()
@@ -46,6 +46,20 @@ class UpdateSessionService {
       );
     }
 
+    const sessionExists = await this.sessionsRepository.findByRoomAndDateTime({
+      room,
+      day: format(day, 'yyyy-MM-dd'),
+      time,
+    });
+
+    if (sessionExists.length > 0) {
+      throw new AppError(
+        400,
+        'Bad request',
+        'There is already a session in this same room, day and time',
+      );
+    }
+
     session.room = room;
     session.capacity = capacity;
     session.day = day;
@@ -53,7 +67,10 @@ class UpdateSessionService {
 
     await this.sessionsRepository.save(session);
 
-    return session;
+    return {
+      ...session,
+      day: format(day, 'dd/MM/yyyy'),
+    };
   }
 }
 
