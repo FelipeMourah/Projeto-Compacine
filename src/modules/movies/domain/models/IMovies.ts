@@ -5,7 +5,7 @@ export interface IMovies {
   image: string;
   name: string;
   description: string;
-  actors: string;
+  actors: string | string[];
   genre: string;
   release_date: string;
   sessions: Session[];
