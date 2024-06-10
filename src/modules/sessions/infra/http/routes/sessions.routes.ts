@@ -36,7 +36,9 @@ sessionsRouter.post(
       room: Joi.string().required(),
       capacity: Joi.number().required(),
       day: JoiExtended.date().format('DD/MM/YYYY').required(),
-      time: Joi.string().required(),
+      time: Joi.string()
+        .pattern(/^(?:[01]\d|2[0-3]):(?:[0-5]\d):(?:[0-5]\d)$/)
+        .required(),
     },
     [Segments.PARAMS]: {
       movie_id: Joi.string().uuid().required(),
@@ -56,7 +58,9 @@ sessionsRouter.put(
       room: Joi.string().required(),
       capacity: Joi.number().required(),
       day: JoiExtended.date().format('DD/MM/YYYY').required(),
-      time: Joi.string().required(),
+      time: Joi.string()
+        .pattern(/^(?:[01]\d|2[0-3]):(?:[0-5]\d):(?:[0-5]\d)$/)
+        .required(),
     },
   }),
   sessionController.update,
