@@ -28,6 +28,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "@joi/date": "^2.1.1",
     "celebrate": "^15.0.3",
     "class-transformer": "^0.5.1",
     "cors": "^2.8.5",
