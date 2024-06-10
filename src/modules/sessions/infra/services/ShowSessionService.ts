@@ -3,6 +3,7 @@ import { ISession } from '@modules/sessions/domain/models/ISession';
 import { IShowSession } from '@modules/sessions/domain/models/IShowSession';
 import { ISessionsRepository } from '@modules/sessions/domain/repositories/ISessionsRepository';
 import AppError from '@shared/errors/AppError';
+import { addDays, format } from 'date-fns';
 import { inject, injectable } from 'tsyringe';
 
 @injectable()
@@ -26,7 +27,15 @@ class ShowSessionService {
       throw new AppError(404, 'Not found', 'Session not found');
     }
 
-    return session;
+    const newDate = addDays(session.day, 1);
+    const formattedDay = format(newDate, 'dd/MM/yyyy');
+
+    const formattedSession = {
+      ...session,
+      day: formattedDay,
+    };
+
+    return formattedSession;
   }
 }
 
