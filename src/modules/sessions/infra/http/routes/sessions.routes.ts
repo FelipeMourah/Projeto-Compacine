@@ -1,6 +1,9 @@
 import { celebrate, Joi, Segments } from 'celebrate';
 import { Router } from 'express';
 import SessionController from '../controllers/SessionController';
+import JoiDate from '@joi/date';
+
+const JoiExtended = Joi.extend(JoiDate);
 
 const sessionsRouter = Router();
 const sessionController = new SessionController();
@@ -32,7 +35,7 @@ sessionsRouter.post(
     [Segments.BODY]: {
       room: Joi.string().required(),
       capacity: Joi.number().required(),
-      day: Joi.date().required(),
+      day: JoiExtended.date().format('DD/MM/YYYY').required(),
       time: Joi.string().required(),
     },
     [Segments.PARAMS]: {
@@ -52,7 +55,7 @@ sessionsRouter.put(
     [Segments.BODY]: {
       room: Joi.string().required(),
       capacity: Joi.number().required(),
-      day: Joi.date().required(),
+      day: JoiExtended.date().format('DD/MM/YYYY').required(),
       time: Joi.string().required(),
     },
   }),
