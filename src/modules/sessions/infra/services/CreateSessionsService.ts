@@ -3,7 +3,7 @@ import { ICreateSession } from '@modules/sessions/domain/models/ICreateSession';
 import { ISession } from '@modules/sessions/domain/models/ISession';
 import { ISessionsRepository } from '@modules/sessions/domain/repositories/ISessionsRepository';
 import AppError from '@shared/errors/AppError';
-import { isBefore, parseISO } from 'date-fns';
+import { format, isBefore, parseISO } from 'date-fns';
 import { inject, injectable } from 'tsyringe';
 
 @injectable()
@@ -41,11 +41,11 @@ class CreateSessionsService {
 
     const sessionExists = await this.sessionRepository.findByRoomAndDateTime({
       room,
-      day,
+      day: format(day, 'yyyy-MM-dd'),
       time,
     });
 
-    if (sessionExists) {
+    if (sessionExists.length > 0) {
       throw new AppError(
         400,
         'Bad request',
@@ -60,8 +60,10 @@ class CreateSessionsService {
       day,
       time,
     });
-
-    return session;
+    return {
+      ...session,
+      day: format(day, 'dd/MM/yyyy'),
+    };
   }
 }
 

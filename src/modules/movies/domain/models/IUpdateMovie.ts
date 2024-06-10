@@ -1,4 +1,5 @@
-export interface ICreateMovie {
+export interface IUpdateMovie {
+  id: string;
   image: string;
   name: string;
   description: string;

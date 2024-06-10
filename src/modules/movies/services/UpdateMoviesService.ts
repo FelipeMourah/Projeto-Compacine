@@ -1,16 +1,9 @@
-import { inject, injectable } from 'tsyringe';
-import { IMovieRepository } from '../domain/repositories/IMovieRepository';
 import AppError from '@shared/errors/AppError';
-
-interface IRequest {
-  id: string;
-  image: string;
-  name: string;
-  description: string;
-  actors: string;
-  genre: string;
-  release_date: string;
-}
+import { format } from 'date-fns';
+import { inject, injectable } from 'tsyringe';
+import { IUpdateMovie } from '../domain/models/IUpdateMovie';
+import { IMovieRepository } from '../domain/repositories/IMovieRepository';
+import Movie from '../infra/typeorm/entities/Movies';
 
 @injectable()
 class UpdateMovieService {
@@ -27,7 +20,7 @@ class UpdateMovieService {
     actors,
     genre,
     release_date,
-  }: IRequest): Promise<void> {
+  }: IUpdateMovie): Promise<Movie> {
     const movie = await this.movieRepository.findById(id);
 
     if (!movie) {
@@ -42,6 +35,11 @@ class UpdateMovieService {
     movie.release_date = release_date;
 
     await this.movieRepository.save(movie);
+
+    return {
+      ...movie,
+      release_date: format(release_date, 'dd/MM/yyyy'),
+    };
   }
 }
 

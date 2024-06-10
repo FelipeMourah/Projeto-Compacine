@@ -24,7 +24,7 @@ class ListSessionsService {
 
     const formattedSessions = sessions.map(session => {
       const newDate = addDays(session.day, 1);
-      const formattedDay = format(newDate, 'dd-MM-yyyy');
+      const formattedDay = format(newDate, 'dd/MM/yyyy');
       return {
         ...session,
         day: formattedDay,

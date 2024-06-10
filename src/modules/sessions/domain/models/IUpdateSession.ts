@@ -1,5 +1,3 @@
-
-
 export interface IUpdateSession {
   id: string;
   movie_id: string;

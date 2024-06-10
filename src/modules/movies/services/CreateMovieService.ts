@@ -1,4 +1,5 @@
 import AppError from '@shared/errors/AppError';
+import { format } from 'date-fns';
 import { inject, injectable } from 'tsyringe';
 import { ICreateMovie } from '../domain/models/ICreateMovie';
 import { IMovieRepository } from '../domain/repositories/IMovieRepository';
@@ -36,7 +37,10 @@ class CreateMovieService {
 
     await this.moviesRepository.save(movie);
 
-    return movie;
+    return {
+      ...movie,
+      release_date: format(release_date, 'dd/MM/yyyy'),
+    };
   }
 }
 
