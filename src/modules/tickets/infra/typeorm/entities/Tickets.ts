@@ -12,7 +12,6 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-
 @Entity('tickets')
 export class Ticket implements ITicket {
   @PrimaryGeneratedColumn('uuid')
@@ -22,14 +21,14 @@ export class Ticket implements ITicket {
   session_id: string;
 
   @ManyToOne(() => Session)
-  @JoinColumn({name: 'session_id'})
-  session: Session
+  @JoinColumn({ name: 'session_id' })
+  session: Session;
 
   @Column()
   chair: string;
 
   @Column()
-  value: number
+  value: number;
 
   @Exclude()
   @CreateDateColumn()

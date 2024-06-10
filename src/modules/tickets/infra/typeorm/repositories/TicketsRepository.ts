@@ -40,9 +40,9 @@ export class TicketsRepository implements ITicketsRepository {
     const ticket = await this.ormRepository.findOne({
       where: {
         id: ticketInfos.id,
-        session_id: ticketInfos.session_id
-      }
-    })
+        session_id: ticketInfos.session_id,
+      },
+    });
     return ticket;
   }
 
@@ -53,8 +53,8 @@ export class TicketsRepository implements ITicketsRepository {
       where: {
         chair: ticketInfos.chair,
         session_id: ticketInfos.session_id,
-      }
-    })
+      },
+    });
 
     return ticket;
   }
