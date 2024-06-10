@@ -2,6 +2,7 @@ import { inject, injectable } from 'tsyringe';
 import { IMovieRepository } from '../domain/repositories/IMovieRepository';
 import Movie from '../infra/typeorm/entities/Movies';
 import AppError from '@shared/errors/AppError';
+import { addDays, format } from 'date-fns';
 
 @injectable()
 class ShowOneMovieService {
@@ -17,7 +18,15 @@ class ShowOneMovieService {
       throw new AppError(404, 'Not found', 'Movie not found');
     }
 
-    return movie;
+    const newDate = addDays(movie.release_date, 1);
+    const formattedDay = format(newDate, 'dd-MM-yyyy');
+
+    const formattedMovie: Movie = {
+      ...movie,
+      release_date: formattedDay,
+    };
+
+    return formattedMovie;
   }
 }
 

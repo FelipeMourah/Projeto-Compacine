@@ -3,6 +3,9 @@ import { Router } from 'express';
 import { MovieController } from '../controllers/MoviesController';
 import { Joi, Segments, celebrate } from 'celebrate';
 import sessionsRouter from '@modules/sessions/infra/http/routes/sessions.routes';
+import JoiDate from '@joi/date';
+
+const JoiExtended = Joi.extend(JoiDate);
 
 const moviesRouter = Router();
 const moviesController = container.resolve(MovieController);
@@ -28,10 +31,10 @@ moviesRouter.post(
         .pattern(/\.(jpeg|jpg|gif|png)$/i)
         .required(),
       name: Joi.string().required(),
-      description: Joi.string().required(),
+      description: Joi.string().max(100, 'utf-8').required(),
       actors: Joi.array().required(),
       genre: Joi.string().required(),
-      release_date: Joi.date().required(),
+      release_date: JoiExtended.date().format('DD/MM/YYYY').required(),
     },
   }),
   moviesController.create,
@@ -46,10 +49,10 @@ moviesRouter.put(
         .pattern(/\.(jpeg|jpg|gif|png)$/i)
         .required(),
       name: Joi.string().required(),
-      description: Joi.string().required(),
-      actors: Joi.string().required(),
+      description: Joi.string().max(100, 'utf-8').required(),
+      actors: Joi.array().required(),
       genre: Joi.string().required(),
-      release_date: Joi.date().required(),
+      release_date: JoiExtended.date().format('DD/MM/YYYY').required(),
     },
   }),
   moviesController.update,
@@ -65,6 +68,6 @@ moviesRouter.delete(
   moviesController.delete,
 );
 
-moviesRouter.use('*/sessions', sessionsRouter)
+moviesRouter.use('*/sessions', sessionsRouter);
 
 export default moviesRouter;
