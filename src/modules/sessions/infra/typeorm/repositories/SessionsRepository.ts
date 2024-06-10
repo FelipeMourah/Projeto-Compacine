@@ -1,5 +1,6 @@
 import { ICreateSession } from '@modules/sessions/domain/models/ICreateSession';
 import { IFindSessionByRoomAndDateTime } from '@modules/sessions/domain/models/IFindSessionByRoomAndDateTime';
+import { ISession } from '@modules/sessions/domain/models/ISession';
 import { ISessionsRepository } from '@modules/sessions/domain/repositories/ISessionsRepository';
 import { dataSource } from '@shared/infra/typeorm';
 import { Repository } from 'typeorm';
@@ -57,12 +58,11 @@ class SessionsRepository implements ISessionsRepository {
     room,
     day,
     time,
-  }: IFindSessionByRoomAndDateTime): Promise<Session | null> {
-    const session = await this.ormRepository.findOneBy({
-      room,
-      day,
-      time,
-    });
+  }: IFindSessionByRoomAndDateTime): Promise<ISession[]> {
+    const session = await this.ormRepository.query(
+      `SELECT * FROM sessions WHERE room = ? AND day = ? AND time = ?`,
+      [room, day, time],
+    );
 
     return session;
   }
