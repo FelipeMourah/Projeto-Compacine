@@ -20,7 +20,7 @@ class ShowOneMovieService {
     }
 
     const newDate = addDays(movie.release_date, 1);
-    const formattedDay = format(newDate, 'dd-MM-yyyy');
+    const formattedDay = format(newDate, 'dd/MM/yyyy');
 
     const formattedMovie: Movie = {
       ...movie,

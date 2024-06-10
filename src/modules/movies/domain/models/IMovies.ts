@@ -9,6 +9,4 @@ export interface IMovies {
   genre: string;
   release_date: string;
   sessions: Session[];
-  created_at: Date;
-  updated_at: Date;
 }
