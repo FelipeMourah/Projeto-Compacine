@@ -69,6 +69,8 @@ ticketRouter.delete(
   celebrate({
     [Segments.PARAMS]: {
       id: Joi.string().uuid().required(),
+      movie_id: Joi.string().uuid().required(),
+      session_id: Joi.string().uuid().required(),
     },
   }),
   ticketsController.delete,
