@@ -1,6 +1,6 @@
 import { IMovies } from '@modules/movies/domain/models/IMovies';
 import { Session } from '@modules/sessions/infra/typeorm/entities/Sessions';
-import { Exclude, Transform } from 'class-transformer';
+import { Exclude } from 'class-transformer';
 import {
   Column,
   CreateDateColumn,
