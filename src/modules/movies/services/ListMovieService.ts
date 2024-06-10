@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { inject, injectable } from 'tsyringe';
 import Movie from '../infra/typeorm/entities/Movies';
 import { IMovieRepository } from '../domain/repositories/IMovieRepository';
