@@ -31,7 +31,7 @@ class Movie implements IMovies {
       from: (value: string) => JSON.parse(value),
     },
   })
-  actors: string;
+  actors: string[];
 
   @Column()
   genre: string;
