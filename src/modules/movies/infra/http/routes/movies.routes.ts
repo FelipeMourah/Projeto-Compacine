@@ -50,7 +50,7 @@ moviesRouter.put(
         .required(),
       name: Joi.string().required(),
       description: Joi.string().max(100, 'utf-8').required(),
-      actors: Joi.string().required(),
+      actors: Joi.array().required(),
       genre: Joi.string().required(),
       release_date: JoiExtended.date().format('DD/MM/YYYY').required(),
     },
