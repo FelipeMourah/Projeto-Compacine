@@ -13,7 +13,7 @@ ticketRouter.get('/:movie_id/sessions/:session_id/tickets', celebrate({
   }
 }), ticketsController.index);
 
-ticketRouter.get('/:movie_id/sessions/:session_id/tickets', celebrate({
+ticketRouter.get('/:movie_id/sessions/:session_id/tickets/:id', celebrate({
   [Segments.BODY]: {
     chair: Joi.string().required(),
     value: Joi.number().precision(2).unsafe().required()

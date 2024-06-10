@@ -7,7 +7,7 @@ import { IShowTicket } from "../domain/models/IShowTicket";
 @injectable()
 class ShowTicketService {
   constructor(
-    @inject('TicketRepository')
+    @inject('TicketsRepository')
     private ticketRepository: ITicketsRepository
   ){}
 
