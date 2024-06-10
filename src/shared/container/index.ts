@@ -19,4 +19,4 @@ container.registerSingleton<ISessionsRepository>(
 container.registerSingleton<ITicketsRepository>(
   'TicketsRepository',
   TicketsRepository,
-)
+);
