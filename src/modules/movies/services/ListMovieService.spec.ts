@@ -6,7 +6,6 @@ describe('ListMovieService', () => {
     const fakeMovieRepository = new FakeMovieRepository();
     const listMovieService = new ListMovieService(fakeMovieRepository);
 
-    // Criar alguns filmes de exemplo
     await fakeMovieRepository.create({
       image: 'movie_image1.jpg',
       name: 'Test Movie 1',
