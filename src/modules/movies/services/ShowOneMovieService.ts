@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { inject, injectable } from 'tsyringe';
 import { IMovieRepository } from '../domain/repositories/IMovieRepository';
 import Movie from '../infra/typeorm/entities/Movies';
@@ -19,7 +20,7 @@ class ShowOneMovieService {
     }
 
     const newDate = addDays(movie.release_date, 1);
-    const formattedDay = format(newDate, 'dd-MM-yyyy');
+    const formattedDay = format(newDate, 'dd/MM/yyyy');
 
     const formattedMovie: Movie = {
       ...movie,
