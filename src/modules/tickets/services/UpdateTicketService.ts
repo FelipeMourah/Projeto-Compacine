@@ -44,8 +44,7 @@ class UpdateTicketService {
     ticketExists.chair = ticket.chair;
     ticketExists.value = ticket.value;
 
-    const ticketUpdated =
-      await this.ticketsRepository.updateTicket(ticketExists);
+    const ticketUpdated = await this.ticketsRepository.update(ticketExists);
 
     return ticketUpdated;
   }

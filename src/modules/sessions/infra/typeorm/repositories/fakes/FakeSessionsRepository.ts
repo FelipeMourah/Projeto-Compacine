@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Session } from '../../entities/Sessions';
 
 class FakeSessionsRepository implements ISessionsRepository {
-  private sessions: Session[];
+  private sessions: Session[] = [];
 
   public async findAll(): Promise<Session[]> {
     return this.sessions;

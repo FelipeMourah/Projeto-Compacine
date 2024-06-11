@@ -46,7 +46,7 @@ class DeleteTicketService {
       );
     }
 
-    await this.ticketsRepository.deleteTicket(ticket);
+    await this.ticketsRepository.delete(ticket);
     return;
   }
 }

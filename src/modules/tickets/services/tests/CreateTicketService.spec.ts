@@ -1,22 +1,208 @@
 import { FakeTicketsRepository } from '@modules/tickets/domain/repositories/fakes/FakeTicketsRepository';
 import CreateTicketService from '../CreateTicketService';
 import { v4 as uuidv4 } from 'uuid';
-let fakeSessionsRepository: FakeTicketsRepository;
-let fakeMoviesRepository: FakeTicketsRepository;
+import FakeMovieRepository from '@modules/movies/infra/typeorm/repositories/fakes/FakeMovieRepository';
+import FakeSessionsRepository from '@modules/sessions/infra/typeorm/repositories/fakes/FakeSessionsRepository';
+import { ICreateMovie } from '@modules/movies/domain/models/ICreateMovie';
+import CreateMovieService from '@modules/movies/services/CreateMovieService';
+import CreateSessionsService from '@modules/sessions/infra/services/CreateSessionsService';
+import { ICreateSession } from '@modules/sessions/domain/models/ICreateSession';
+import { ICreateTicket } from '@modules/tickets/domain/models/ICreateTicket';
+import AppError from '@shared/errors/AppError';
+let fakeSessionsRepository: FakeSessionsRepository;
+let fakeMoviesRepository: FakeMovieRepository;
 let fakeTicketsRepository: FakeTicketsRepository;
 let createTicket: CreateTicketService;
+let createMovie: CreateMovieService;
+let createSession: CreateSessionsService;
 describe('CreateTicketService', () => {
   beforeEach(() => {
-    fakeMoviesRepository = new FakeTicketsRepository();
+    fakeMoviesRepository = new FakeMovieRepository();
     fakeTicketsRepository = new FakeTicketsRepository();
-    fakeSessionsRepository = new FakeTicketsRepository();
-    createTicket = new CreateTicketService(fakeTicketsRepository, fakeMoviesRepository, fakeSessionsRepository);
-  });
-  it('should be able to create a new customer', async () => {
-    const session_id = uuidv4();
-    const { chair, value } = { chair: 'A9', value: 20 };
-    const ticket = await createTicket.execute({ chair, value, session_id });
+    fakeSessionsRepository = new FakeSessionsRepository();
 
-    expect(ticket).toHaveProperty('id', 'created_at');
+    createMovie = new CreateMovieService(fakeMoviesRepository);
+    createSession = new CreateSessionsService(
+      fakeSessionsRepository,
+      fakeMoviesRepository,
+    );
+    createTicket = new CreateTicketService(
+      fakeTicketsRepository,
+      fakeSessionsRepository,
+      fakeMoviesRepository,
+    );
+  });
+  it('should be able to create a new ticket', async () => {
+    const movieData: ICreateMovie = {
+      image: 'movie_image.jpg',
+      name: 'Test Movie',
+      description: 'This is a test movie',
+      actors: ['Actor 1', 'Actor 2'],
+      genre: 'Action',
+      release_date: '2024-06-10',
+    };
+    const createdMovie = await createMovie.execute(movieData);
+
+    const sessionData: ICreateSession = {
+      capacity: 321,
+      day: '2025-07-23',
+      movie_id: createdMovie.id,
+      room: 'A10',
+      time: '22:15:00',
+    };
+
+    const createdSession = await createSession.execute(sessionData);
+
+    const ticketData: ICreateTicket = {
+      chair: 'A40',
+      session_id: createdSession.id,
+      value: 25,
+      movie_id: createdMovie.id,
+    };
+
+    const ticket = await createTicket.execute(ticketData);
+
+    expect(ticket).toHaveProperty('id');
+  });
+
+  it('It should not be possible to create a ticket with an invalid Session', async () => {
+    const movieData: ICreateMovie = {
+      image: 'movie_image.jpg',
+      name: 'Test Movie',
+      description: 'This is a test movie',
+      actors: ['Actor 1', 'Actor 2'],
+      genre: 'Action',
+      release_date: '20/10/2025',
+    };
+
+    const createdMovie = await createMovie.execute(movieData);
+
+    const sessionData: ICreateSession = {
+      capacity: 321,
+      day: '20/10/2025',
+      movie_id: createdMovie.id,
+      room: 'A10',
+      time: '22:15:00',
+    };
+
+    await createSession.execute(sessionData);
+
+    const ticketData: ICreateTicket = {
+      chair: 'A40',
+      session_id: uuidv4(),
+      value: 25,
+      movie_id: createdMovie.id,
+    };
+
+    await expect(createTicket.execute(ticketData)).rejects.toBeInstanceOf(
+      AppError,
+    );
+  });
+
+  it('It should not be possible to create a ticket with an invalid Movie', async () => {
+    const movieData: ICreateMovie = {
+      image: 'movie_image.jpg',
+      name: 'Test Movie',
+      description: 'This is a test movie',
+      actors: ['Actor 1', 'Actor 2'],
+      genre: 'Action',
+      release_date: new Date('2024-12-12').toISOString(),
+    };
+
+    await createMovie.execute(movieData);
+
+    const sessionData: ICreateSession = {
+      capacity: 321,
+      day: new Date('2024-12-12').toISOString(),
+      movie_id: uuidv4(),
+      room: 'A10',
+      time: '22:15:00',
+    };
+
+    const createdSession = await createSession.execute(sessionData);
+
+    const ticketData: ICreateTicket = {
+      chair: 'A40',
+      session_id: createdSession.id,
+      value: 25,
+      movie_id: uuidv4(),
+    };
+
+    await expect(createTicket.execute(ticketData)).rejects.toBeInstanceOf(
+      AppError,
+    );
+  });
+
+  it('It should not be possible to create a ticket when capacity is zero or negative', async () => {
+    const movieData: ICreateMovie = {
+      image: 'movie_image.jpg',
+      name: 'Test Movie',
+      description: 'This is a test movie',
+      actors: ['Actor 1', 'Actor 2'],
+      genre: 'Action',
+      release_date: new Date('2024-12-12').toISOString(),
+    };
+
+    const createdMovie = await createMovie.execute(movieData);
+
+    const sessionData: ICreateSession = {
+      capacity: 0,
+      day: '2025-12-15',
+      movie_id: createdMovie.id,
+      room: 'A10',
+      time: '22:15:00',
+    };
+
+    const createdSession = await createSession.execute(sessionData);
+
+    const ticketData: ICreateTicket = {
+      chair: 'A40',
+      session_id: createdSession.id,
+      value: 25,
+      movie_id: createdMovie.id,
+    };
+
+    await expect(createTicket.execute(ticketData)).rejects.toBeInstanceOf(
+      AppError,
+    );
+  });
+
+  it('It should not be possible to create two equals tickets', async () => {
+    const movieData: ICreateMovie = {
+      image: 'movie_image.jpg',
+      name: 'Test Movie',
+      description: 'This is a test movie',
+      actors: ['Actor 1', 'Actor 2'],
+      genre: 'Action',
+      release_date: '2024-06-10',
+    };
+
+    const createdMovie = await createMovie.execute(movieData);
+
+    const sessionData: ICreateSession = {
+      capacity: 10,
+      day: '2025-12-15',
+      movie_id: createdMovie.id,
+      room: 'A10',
+      time: '22:15:00',
+    };
+
+    const createdSession = await createSession.execute(sessionData);
+
+    const ticketData: ICreateTicket = {
+      chair: 'A40',
+      session_id: createdSession.id,
+      value: 25,
+      movie_id: createdMovie.id,
+    };
+
+    await createTicket.execute(ticketData);
+
+    await expect(createTicket.execute(ticketData)).rejects.toBeInstanceOf(
+      AppError,
+    );
+    await expect(createTicket.execute(ticketData)).rejects.toHaveProperty(
+      'code',
+    );
   });
 });

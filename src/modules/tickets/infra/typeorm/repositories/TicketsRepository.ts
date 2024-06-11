@@ -5,7 +5,6 @@ import { ICreateTicket } from '@modules/tickets/domain/models/ICreateTicket';
 import { ITicket } from '@modules/tickets/domain/models/ITicket';
 import { IFindByIdAndSession } from '@modules/tickets/domain/models/IFindByIdAndSession';
 import { IFindByChairAndSession } from '@modules/tickets/domain/models/IFindByChairAndSession';
-import { IUpdateTicket } from '@modules/tickets/domain/models/IUpdateTicket';
 import { Ticket } from '../entities/Tickets';
 
 export class TicketsRepository implements ITicketsRepository {
@@ -74,7 +73,7 @@ export class TicketsRepository implements ITicketsRepository {
     return ticket;
   }
 
-  public async updateTicket(ticket: IUpdateTicket): Promise<Ticket | null> {
+  public async updateTicket(ticket: Ticket): Promise<Ticket | null> {
     const ticketSaved = await this.ormRepository.save(ticket);
 
     return ticketSaved;
