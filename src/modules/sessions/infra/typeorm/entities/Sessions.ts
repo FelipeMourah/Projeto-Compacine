@@ -32,7 +32,7 @@ export class Session implements ISession {
   capacity: number;
 
   @Column({ type: 'date' })
-  day: Date;
+  day: string;
 
   @Column()
   time: string;

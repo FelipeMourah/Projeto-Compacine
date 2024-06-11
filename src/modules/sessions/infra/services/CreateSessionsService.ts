@@ -3,7 +3,7 @@ import { ICreateSession } from '@modules/sessions/domain/models/ICreateSession';
 import { ISession } from '@modules/sessions/domain/models/ISession';
 import { ISessionsRepository } from '@modules/sessions/domain/repositories/ISessionsRepository';
 import AppError from '@shared/errors/AppError';
-import { format, isBefore, parseISO } from 'date-fns';
+import { format, isBefore } from 'date-fns';
 import { inject, injectable } from 'tsyringe';
 
 @injectable()
@@ -28,7 +28,7 @@ class CreateSessionsService {
       throw new AppError(404, 'Not Found', 'Movie not found.');
     }
 
-    const sessionDate = parseISO(day.toISOString());
+    const sessionDate = new Date(day);
     const today = new Date();
 
     if (isBefore(sessionDate, today)) {
