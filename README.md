@@ -80,3 +80,7 @@ Siga as instruções abaixo para configurar e rodar o projeto em seu ambiente lo
 5. Clique em "Send"
 
    ![TestPostPut](https://i.imgur.com/f3LOJEr.png)
+
+# Dados .env
+
+    PORT = 3000
