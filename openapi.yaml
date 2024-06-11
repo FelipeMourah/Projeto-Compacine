@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Swagger Compacine - OpenAPI 3.0
-   description: O projeto consiste no desenvolvimento de uma API REST para a bilheteria de um cinema, utilizando as tecnologias e conhecimentos aprendidos no curso. O projeto deve ser desenvolvido em grupo. Esperamos ver um código entendível e bem organizado, seguindo os requisitos solicitados.
+  description: "O projeto consiste no desenvolvimento de uma API REST para a bilheteria de um cinema, utilizando as tecnologias e conhecimentos aprendidos no curso. O projeto deve ser desenvolvido em grupo. Esperamos ver um código entendível e bem organizado, seguindo os requisitos solicitados."
   #   Some useful links:
   #   - [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)
   #   - [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
