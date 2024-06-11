@@ -81,7 +81,7 @@ describe('CreateTicketService', () => {
     ).resolves.toHaveProperty('chair');
   });
 
-  it('It should not be possible to list a ticket with an invalid Movie', async () => {
+  it('It should not be possible to show a ticket with an invalid Movie', async () => {
     const movieData: ICreateMovie = {
       image: 'movie_image.jpg',
       name: 'Test Movie',
@@ -120,7 +120,7 @@ describe('CreateTicketService', () => {
     ).rejects.toBeInstanceOf(AppError);
   });
 
-  it('It should not be possible to list the tickets with an invalid Session', async () => {
+  it('It should not be possible to show the tickets with an invalid Session', async () => {
     const movieData: ICreateMovie = {
       image: 'movie_image.jpg',
       name: 'Test Movie',

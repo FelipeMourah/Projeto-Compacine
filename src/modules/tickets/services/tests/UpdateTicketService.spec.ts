@@ -81,7 +81,7 @@ describe('CreateTicketService', () => {
     expect(updatedTicket?.value).toBe(70);
   });
 
-  it('It should not be possible to show a ticket with an invalid Session', async () => {
+  it('It should not be possible to updade a ticket with an invalid Session', async () => {
     const movieData: ICreateMovie = {
       image: 'movie_image.jpg',
       name: 'Test Movie',
@@ -123,7 +123,7 @@ describe('CreateTicketService', () => {
     ).rejects.toBeInstanceOf(AppError);
   });
 
-  it('It should not be possible to create a ticket with an invalid Movie', async () => {
+  it('It should not be possible to updade a ticket with an invalid Movie', async () => {
     const movieData: ICreateMovie = {
       image: 'movie_image.jpg',
       name: 'Test Movie',
@@ -164,7 +164,7 @@ describe('CreateTicketService', () => {
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
-  it('It should not be possible to show a ticket with an invalid ID', async () => {
+  it('It should not be possible to updade a ticket with an invalid ID', async () => {
     const movieData: ICreateMovie = {
       image: 'movie_image.jpg',
       name: 'Test Movie',
