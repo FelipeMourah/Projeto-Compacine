@@ -1,0 +1,1343 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Swagger Compacine - OpenAPI 3.0",
+    "description": "O projeto consiste no desenvolvimento de uma API REST para a bilheteria de um cinema, utilizando as tecnologias e conhecimentos aprendidos no curso. O projeto deve ser desenvolvido em grupo. Esperamos ver um código entendível e bem organizado, seguindo os requisitos solicitados.",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.11"
+  },
+  "servers": [
+    {
+      "url": "http:/localhost:8000/api/v1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Movie",
+      "description": "Operações sobre Movie"
+    },
+    {
+      "name": "Session",
+      "description": "Operações sobre Session"
+    },
+    {
+      "name": "Ticket",
+      "description": "Operações sobre Ticket"
+    }
+  ],
+  "paths": {
+    "/movies": {
+      "post": {
+        "tags": [
+          "Movie"
+        ],
+        "summary": "Cria um novo movie",
+        "description": "Realiza a criação de um novo movie no sistema.",
+        "operationId": "createMovie",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewMovie"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Movie criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Movie"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status400"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do Servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status500"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Movie"
+        ],
+        "summary": "Busca por todos os Movies",
+        "description": "Realiza a busca de todos os filmes cadastrados.",
+        "operationId": "listMovies",
+        "responses": {
+          "200": {
+            "description": "Todos os Movies foram listados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Movie"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status400"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do Servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movies/{movie_id}": {
+      "put": {
+        "tags": [
+          "Movie"
+        ],
+        "summary": "Atualiza um Movie",
+        "description": "Altera as características de um Movie",
+        "operationId": "updateMovie",
+        "parameters": [
+          {
+            "name": "movie_id",
+            "in": "path",
+            "description": "ID do Movie a ser modificado",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "UUID"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewMovie"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Movie alterado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Movie"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status400"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "O id de Movie não foi encotrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status404"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do Servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status500"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Movie"
+        ],
+        "summary": "Busca por um Movie",
+        "description": "Busca por um Movie específico.",
+        "operationId": "showMovie",
+        "parameters": [
+          {
+            "name": "movie_id",
+            "in": "path",
+            "description": "ID do Movie a ser buscado.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "UUID"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Movie encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ticket"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status400"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "O ID de Movie não foi encotrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status404"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do Servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status500"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Movie"
+        ],
+        "summary": "Remove um Movie",
+        "description": "Remove um Movie do sistema",
+        "operationId": "deleteMovie",
+        "parameters": [
+          {
+            "name": "movie_id",
+            "in": "path",
+            "description": "ID do Movie a ser removido",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "UUID"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Ticket removido com sucesso"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status400"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "O id de Movie não foi encotrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status404"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do Servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movies/{movie_id}/sessions/{session_id}": {
+      "put": {
+        "tags": [
+          "Session"
+        ],
+        "summary": "Altera uma Session",
+        "description": "Cria uma nova sessão para o filme indicado pelo ID.",
+        "operationId": "updateSession",
+        "parameters": [
+          {
+            "name": "movie_id",
+            "in": "path",
+            "description": "ID o filme que terá uma Session alterada",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "UUID"
+            }
+          },
+          {
+            "name": "session_id",
+            "in": "path",
+            "description": "ID da Session que será alterada",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "UUID"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewSession"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Session alterada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status400"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "O id de Movie ou Session não foi encotrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status404"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do Servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status500"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Session"
+        ],
+        "summary": "Retorna uma Session",
+        "description": "Retorna",
+        "operationId": "getInventory",
+        "parameters": [
+          {
+            "name": "movie_id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "UUID"
+            }
+          },
+          {
+            "name": "session_id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "UUID"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Session encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status400"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "O id de Movie ou Session não foi encotrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status404"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do Servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status500"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Session"
+        ],
+        "summary": "Remove uma Session",
+        "description": "Remove do sistema a Session com o ID especificado.",
+        "operationId": "deleteSession",
+        "parameters": [
+          {
+            "name": "movie_id",
+            "in": "path",
+            "description": "ID do Movie vinculado a Session a ser removida",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "UUID"
+            }
+          },
+          {
+            "name": "session_id",
+            "in": "path",
+            "description": "ID da Session que será removida",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "UUID"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Session removida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status400"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "O id de Movie ou Session não foi encotrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status404"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do Servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movies/{movie_id}/sessions": {
+      "post": {
+        "tags": [
+          "Session"
+        ],
+        "summary": "Cria uma nova Session",
+        "description": "Cria uma nova sessão para o filme indicado pelo ID.",
+        "operationId": "createSession",
+        "parameters": [
+          {
+            "name": "movie_id",
+            "in": "path",
+            "description": "ID o filme que terá uma Session criada",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "UUID"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewSession"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Session criada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status400"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "O id de Movie não foi encotrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status404"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do Servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status500"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Session"
+        ],
+        "summary": "Lista todas as Sessions de um Movie",
+        "description": "",
+        "operationId": "ListSession",
+        "parameters": [
+          {
+            "name": "movie_id",
+            "in": "path",
+            "description": "ID o filme que está vinculado as Sessions",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "UUID"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sessions encontradas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status400"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "O id de Movie não foi encotrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status404"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do Servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movies/{movie_id}/sessions/{session_id}/tickets": {
+      "get": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Busca por todos os tickets",
+        "description": "Busca por todos os Tickets cadastrados no filme e sessão especificados.",
+        "operationId": "ListTicket",
+        "parameters": [
+          {
+            "name": "movie_id",
+            "in": "path",
+            "description": "ID do filme vinculado ao Ticket a ser buscado",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "UUID"
+            }
+          },
+          {
+            "name": "session_id",
+            "in": "path",
+            "description": "ID da sessão vinculada ao Ticket a ser buscado",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "UUID"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ticket criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ticket"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status400"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "O id de [Movie|Session] não foi encotrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status404"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do Servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status500"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Cria um ticket",
+        "description": "Realiza a criação de um ticket vinculado a um filme e sessão.",
+        "operationId": "createTicket",
+        "parameters": [
+          {
+            "name": "movie_id",
+            "in": "path",
+            "description": "ID do filme que o Ticket será vinculado",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "UUID"
+            }
+          },
+          {
+            "name": "session_id",
+            "in": "path",
+            "description": "ID da sessão que o ticket será vinculado",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "UUID"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewTicket"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Ticket criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ticket"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status400"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "O ID de [Movie|Session|Ticket] não foi encotrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status404"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do Servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movies/{movie_id}/sessions/{session_id}/tickets/{id}": {
+      "get": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Busca por um Ticket",
+        "description": "Isto só pode ser feito com um movie_id, session_id e ticket_id válidos no sistema.",
+        "operationId": "ShowTicket",
+        "parameters": [
+          {
+            "name": "movie_id",
+            "in": "path",
+            "description": "ID do filme vinculada ao Ticket a ser buscado",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "UUID"
+            }
+          },
+          {
+            "name": "session_id",
+            "in": "path",
+            "description": "ID da sessão vinculada ao Ticket a ser buscado",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "UUID"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do Ticket a ser buscado",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "UUID"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ticket encotrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ticket"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status400"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ticket não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status404"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do Servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status500"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Altera um Ticket",
+        "description": "Realiza a alteração de propriedades de um ticket.",
+        "operationId": "updateTicket",
+        "parameters": [
+          {
+            "name": "movie_id",
+            "in": "path",
+            "description": "ID do filme vinculado ao ticket",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "session_id",
+            "in": "path",
+            "description": "ID da sessão vinculada ao ticket",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do ticket a ser alterado",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/NewTicket"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Ticket alterado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ticket"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status400"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "O id de [Movie|Session|Ticket] não foi encotrado;",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status404"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do Servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status500"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Remove um Ticket",
+        "description": "Realiza a remoção de um ticket",
+        "operationId": "deleteTicket",
+        "parameters": [
+          {
+            "name": "movie_id",
+            "in": "path",
+            "description": "ID do filme vinculado ao ticket a ser removido",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "session_id",
+            "in": "path",
+            "description": "ID da sessão vinculada ao ticket a ser removido",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do Ticket a ser removido",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Ticket removido com sucesso"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status400"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "O id de [Movie|Session|Ticket] não foi encotrado;",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status404"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do Servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status500"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "NewMovie": {
+        "type": "object",
+        "properties": {
+          "image": {
+            "type": "string",
+            "example": "http://imagem.jpg"
+          },
+          "name": {
+            "type": "string",
+            "example": "007"
+          },
+          "description": {
+            "type": "string"
+          },
+          "actors": {
+            "type": "array",
+            "description": "Actors",
+            "items": {
+              "example": "James Bond"
+            }
+          },
+          "genre": {
+            "type": "string",
+            "example": "Action"
+          },
+          "release_date": {
+            "type": "string",
+            "format": "date",
+            "example": "23/05/2025"
+          }
+        }
+      },
+      "Movie": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": 10
+          },
+          "image": {
+            "type": "string",
+            "format": "int64",
+            "example": "http"
+          },
+          "name": {
+            "type": "string",
+            "example": "007"
+          },
+          "description": {
+            "type": "string"
+          },
+          "actors": {
+            "type": "array",
+            "description": "Actors",
+            "items": {
+              "example": "James Bond"
+            }
+          },
+          "genre": {
+            "type": "string",
+            "example": "Action"
+          },
+          "release_date": {
+            "type": "string",
+            "format": "date",
+            "example": "29/07/2025"
+          }
+        }
+      },
+      "NewSession": {
+        "type": "object",
+        "properties": {
+          "room": {
+            "type": "string"
+          },
+          "capacity": {
+            "type": "number"
+          },
+          "day": {
+            "type": "string",
+            "format": "date"
+          },
+          "time": {
+            "type": "string",
+            "format": "time"
+          }
+        }
+      },
+      "Session": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "39cf5024-eda2-4569-8a61-46aca9284094"
+          },
+          "movie_id": {
+            "type": "string",
+            "example": "fehguy"
+          },
+          "room": {
+            "type": "string"
+          },
+          "capacity": {
+            "type": "number",
+            "format": "int32"
+          }
+        }
+      },
+      "NewTicket": {
+        "type": "object",
+        "properties": {
+          "chair": {
+            "type": "string",
+            "example": "A10"
+          },
+          "value": {
+            "type": "number",
+            "example": "24.90"
+          }
+        }
+      },
+      "Ticket": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "39cf5024-eda2-4569-8a61-46aca9284094"
+          },
+          "session_id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "699ec52a-03db-4744-b06d-cfb8e1920470"
+          },
+          "chair": {
+            "type": "string",
+            "example": "A10"
+          },
+          "value": {
+            "type": "number",
+            "example": "24.90"
+          }
+        }
+      },
+      "Status400": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "example": 400
+          },
+          "status": {
+            "type": "string",
+            "example": "Bad Request"
+          },
+          "message": {
+            "type": "string",
+            "example": "Ticket_id is missing"
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "example": {
+                "field": "something",
+                "message": "something else"
+              }
+            }
+          }
+        }
+      },
+      "Status404": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "example": 404
+          },
+          "status": {
+            "type": "string",
+            "example": "Bad Request"
+          },
+          "message": {
+            "type": "string",
+            "example": "Ticket_id is missing"
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "example": "optional informations"
+            }
+          }
+        }
+      },
+      "Status500": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "example": 500
+          },
+          "status": {
+            "type": "string",
+            "example": "Internal Server Error"
+          },
+          "message": {
+            "type": "string",
+            "example": "The server can't handle something"
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "example": "Optional information"
+            }
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "Movie": {
+        "description": "Pet object that needs to be added to the store",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/NewMovie"
+            }
+          }
+        }
+      },
+      "Session": {
+        "description": "List of user object",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/NewSession"
+              }
+            }
+          }
+        }
+      },
+      "Ticket": {
+        "description": "sadasd",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/NewTicket"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
