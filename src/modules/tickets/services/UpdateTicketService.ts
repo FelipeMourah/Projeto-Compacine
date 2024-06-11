@@ -1,6 +1,5 @@
 import { inject, injectable } from 'tsyringe';
 import { ITicketsRepository } from '../domain/repositories/ITicketsRepository';
-import { IUpdateTicket } from '../domain/models/IUpdateTicket';
 import { ITicket } from '../domain/models/ITicket';
 import AppError from '@shared/errors/AppError';
 import { ISessionsRepository } from '@modules/sessions/domain/repositories/ISessionsRepository';
@@ -16,7 +15,7 @@ class UpdateTicketService {
     private moviesRepository: IMovieRepository,
   ) {}
 
-  public async execute(ticket: IUpdateTicket): Promise<ITicket | null> {
+  public async execute(ticket: ITicket): Promise<ITicket | null> {
     const movie = await this.moviesRepository.findById(
       ticket.movie_id as string,
     );
@@ -33,7 +32,9 @@ class UpdateTicketService {
       ]);
     }
 
-    const ticketExists = await this.ticketsRepository.findById(ticket.id);
+    const ticketExists = await this.ticketsRepository.findById(
+      ticket.id as string,
+    );
 
     if (!ticketExists) {
       throw new AppError(404, 'Not Found', 'Ticket not Found', [
@@ -44,7 +45,8 @@ class UpdateTicketService {
     ticketExists.chair = ticket.chair;
     ticketExists.value = ticket.value;
 
-    const ticketUpdated = await this.ticketsRepository.update(ticketExists);
+    const ticketUpdated =
+      await this.ticketsRepository.updateTicket(ticketExists);
 
     return ticketUpdated;
   }
