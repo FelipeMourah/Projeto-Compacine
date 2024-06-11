@@ -1,0 +1,44 @@
+import { inject, injectable } from 'tsyringe';
+import { ITicketsRepository } from '../domain/repositories/ITicketsRepository';
+import { ITicket } from '../domain/models/ITicket';
+import { IMovieRepository } from '@modules/movies/domain/repositories/IMovieRepository';
+import { ISessionsRepository } from '@modules/sessions/domain/repositories/ISessionsRepository';
+import AppError from '@shared/errors/AppError';
+import { IListTickets } from '../domain/models/IListTickets';
+
+@injectable()
+class ListTicketService {
+  constructor(
+    @inject('TicketsRepository')
+    private ticketsRepository: ITicketsRepository,
+    @inject('SessionsRepository')
+    private sessionsRepository: ISessionsRepository,
+    @inject('MovieRepository')
+    private moviesRepository: IMovieRepository,
+  ) {}
+
+  public async execute({
+    movie_id,
+    session_id,
+  }: IListTickets): Promise<ITicket[] | null> {
+    const movie = await this.moviesRepository.findById(movie_id);
+    if (!movie) {
+      throw new AppError(404, 'Not found', 'Movie not found', [
+        `movie_id: ${movie_id}`,
+      ]);
+    }
+
+    const session = this.sessionsRepository.findById(session_id);
+    if (!session) {
+      throw new AppError(404, 'Not found', 'Session not found', [
+        `session_id: ${session_id}`,
+      ]);
+    }
+
+    const tickets = await this.ticketsRepository.findAll();
+
+    return tickets;
+  }
+}
+
+export default ListTicketService;

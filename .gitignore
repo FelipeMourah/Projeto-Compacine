@@ -13,3 +13,7 @@ uploads/*
 
 ### Logs database
 data/
+
+### Request files
+*.rest
+*.http
