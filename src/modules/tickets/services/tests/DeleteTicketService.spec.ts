@@ -17,7 +17,7 @@ let createTicket: CreateTicketService;
 let createSession: CreateSessionsService;
 let createMovie: CreateMovieService;
 let deleteTicket: DeleteTicketService;
-describe('CreateTicketService', () => {
+describe('DeleteTicketService', () => {
   beforeEach(() => {
     fakeMoviesRepository = new FakeMovieRepository();
     fakeTicketsRepository = new FakeTicketsRepository();
@@ -62,16 +62,17 @@ describe('CreateTicketService', () => {
       chair: 'A40',
       session_id: createdSession.id,
       value: 25,
+      movie_id: createdMovie.id,
     };
     const createdTicket = await createTicket.execute(ticketData);
 
-    const deletedTicket = await deleteTicket.execute({
-      id: createdTicket.id,
-      session_id: createdSession.id,
-      movie_id: createdMovie.id,
-    });
-
-    expect(deletedTicket).rejects.toBeInstanceOf(AppError);
+    await expect(
+      deleteTicket.execute({
+        id: createdTicket.id as string,
+        session_id: createdSession.id,
+        movie_id: createdMovie.id,
+      }),
+    ).resolves.toBeFalsy();
   });
 
   it('It should not be possible to delete a ticket with an invalid Session', async () => {
@@ -86,37 +87,70 @@ describe('CreateTicketService', () => {
 
     const createdMovie = await createMovie.execute(movieData);
 
-    const ticketData: ICreateTicket = {
-      chair: 'A40',
-      session_id: uuidv4(),
-      value: 25,
-    };
-
-    const ticket = await createTicket.execute(ticketData);
-
-    expect(ticket).rejects.toBeInstanceOf(AppError);
-  });
-
-  it('It should not be possible to delete a ticket with an invalid Movie', async () => {
     const sessionData: ICreateSession = {
       capacity: 321,
-      day: '20/10/2025',
-      movie_id: uuidv4(),
+      day: '2025-08-19',
+      movie_id: createdMovie.id,
       room: 'A10',
       time: '22:15:00',
     };
-
     const createdSession = await createSession.execute(sessionData);
 
     const ticketData: ICreateTicket = {
       chair: 'A40',
       session_id: createdSession.id,
       value: 25,
+      movie_id: createdMovie.id,
     };
 
     const ticket = await createTicket.execute(ticketData);
 
-    expect(ticket).rejects.toBeInstanceOf(AppError);
+    await expect(
+      deleteTicket.execute({
+        id: ticket.id as string,
+        session_id: uuidv4(),
+        movie_id: createdMovie.id,
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('It should not be possible to delete a ticket with an invalid Movie', async () => {
+    const movieData: ICreateMovie = {
+      image: 'movie_image.jpg',
+      name: 'Test Movie',
+      description: 'This is a test movie',
+      actors: ['Actor 1', 'Actor 2'],
+      genre: 'Action',
+      release_date: '2024-06-19',
+    };
+
+    const createdMovie = await createMovie.execute(movieData);
+
+    const sessionData: ICreateSession = {
+      capacity: 321,
+      day: '2025-08-19',
+      movie_id: createdMovie.id,
+      room: 'A10',
+      time: '22:15:00',
+    };
+    const createdSession = await createSession.execute(sessionData);
+
+    const ticketData: ICreateTicket = {
+      chair: 'A40',
+      session_id: createdSession.id,
+      value: 25,
+      movie_id: createdMovie.id,
+    };
+
+    const ticket = await createTicket.execute(ticketData);
+
+    await expect(
+      deleteTicket.execute({
+        id: ticket.id as string,
+        session_id: createdSession.id,
+        movie_id: uuidv4(),
+      }),
+    ).rejects.toBeInstanceOf(AppError);
   });
 
   it('It should not be possible to delete a ticket not found', async () => {
@@ -126,34 +160,35 @@ describe('CreateTicketService', () => {
       description: 'This is a test movie',
       actors: ['Actor 1', 'Actor 2'],
       genre: 'Action',
-      release_date: '2024-06-10',
+      release_date: '2024-06-19',
     };
 
     const createdMovie = await createMovie.execute(movieData);
 
     const sessionData: ICreateSession = {
       capacity: 321,
-      day: '20/10/2025',
+      day: '2025-08-19',
       movie_id: createdMovie.id,
       room: 'A10',
       time: '22:15:00',
     };
-
     const createdSession = await createSession.execute(sessionData);
 
     const ticketData: ICreateTicket = {
       chair: 'A40',
       session_id: createdSession.id,
       value: 25,
+      movie_id: createdMovie.id,
     };
+
     await createTicket.execute(ticketData);
 
-    const ticket = await deleteTicket.execute({
-      id: uuidv4(),
-      session_id: createdSession.id,
-      movie_id: createdMovie.id,
-    });
-
-    expect(ticket).rejects.toBeInstanceOf(AppError);
+    await expect(
+      deleteTicket.execute({
+        id: uuidv4(),
+        session_id: createdSession.id,
+        movie_id: createdMovie.id,
+      }),
+    ).rejects.toBeInstanceOf(AppError);
   });
 });

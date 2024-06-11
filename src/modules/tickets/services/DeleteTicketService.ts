@@ -21,7 +21,7 @@ class DeleteTicketService {
     session_id,
     movie_id,
   }: IDeleteTicket): Promise<void> {
-    const movie = await this.moviesRepository.findById(movie_id as string);
+    const movie = await this.moviesRepository.findById(movie_id);
     if (!movie) {
       throw new AppError(404, 'Not found', 'Movie not found', [
         `movie_id: ${movie_id}`,
@@ -46,8 +46,7 @@ class DeleteTicketService {
       );
     }
 
-    await this.ticketsRepository.delete(ticket);
-    return;
+    await this.ticketsRepository.deleteTicket(ticket);
   }
 }
 

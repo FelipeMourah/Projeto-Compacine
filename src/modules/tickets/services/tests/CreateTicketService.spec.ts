@@ -72,14 +72,14 @@ describe('CreateTicketService', () => {
       description: 'This is a test movie',
       actors: ['Actor 1', 'Actor 2'],
       genre: 'Action',
-      release_date: '20/10/2025',
+      release_date: '2025-10-15',
     };
 
     const createdMovie = await createMovie.execute(movieData);
 
     const sessionData: ICreateSession = {
       capacity: 321,
-      day: '20/10/2025',
+      day: '2025-10-21',
       movie_id: createdMovie.id,
       room: 'A10',
       time: '22:15:00',
@@ -109,12 +109,12 @@ describe('CreateTicketService', () => {
       release_date: new Date('2024-12-12').toISOString(),
     };
 
-    await createMovie.execute(movieData);
+    const createdMovie = await createMovie.execute(movieData);
 
     const sessionData: ICreateSession = {
       capacity: 321,
       day: new Date('2024-12-12').toISOString(),
-      movie_id: uuidv4(),
+      movie_id: createdMovie.id,
       room: 'A10',
       time: '22:15:00',
     };
