@@ -1,8 +1,9 @@
+import AppError from '@shared/errors/AppError';
+import { addDays, format } from 'date-fns';
+import 'reflect-metadata';
 import { inject, injectable } from 'tsyringe';
 import { IMovieRepository } from '../domain/repositories/IMovieRepository';
 import Movie from '../infra/typeorm/entities/Movies';
-import AppError from '@shared/errors/AppError';
-import { addDays, format } from 'date-fns';
 
 @injectable()
 class ShowOneMovieService {
@@ -19,11 +20,19 @@ class ShowOneMovieService {
     }
 
     const newDate = addDays(movie.release_date, 1);
-    const formattedDay = format(newDate, 'dd-MM-yyyy');
+    const formattedDay = format(newDate, 'dd/MM/yyyy');
+    const formattedSessionDay = movie.sessions.map(session => {
+      const originalDay = session.day;
+      return {
+        ...session,
+        day: format(originalDay, 'dd/MM/yyyy'),
+      };
+    });
 
     const formattedMovie: Movie = {
       ...movie,
       release_date: formattedDay,
+      sessions: formattedSessionDay,
     };
 
     return formattedMovie;

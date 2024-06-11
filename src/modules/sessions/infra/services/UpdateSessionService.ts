@@ -35,7 +35,7 @@ class UpdateSessionService {
       throw new AppError(404, 'Not found', 'Session not found');
     }
 
-    const sessionDate = parseISO(day.toISOString());
+    const sessionDate = parseISO(day);
     const today = new Date();
 
     if (isBefore(sessionDate, today)) {

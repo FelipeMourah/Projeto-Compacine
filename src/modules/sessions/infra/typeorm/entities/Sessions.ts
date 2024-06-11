@@ -1,16 +1,13 @@
 import Movie from '@modules/movies/infra/typeorm/entities/Movies';
 import { ISession } from '@modules/sessions/domain/models/ISession';
 import { Ticket } from '@modules/tickets/infra/typeorm/entities/Tickets';
-import { Exclude } from 'class-transformer';
 import {
   Column,
-  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity('sessions')
@@ -35,16 +32,8 @@ export class Session implements ISession {
   capacity: number;
 
   @Column({ type: 'date' })
-  day: Date;
+  day: string;
 
   @Column()
   time: string;
-
-  @Exclude()
-  @CreateDateColumn()
-  created_at: Date;
-
-  @Exclude()
-  @UpdateDateColumn()
-  updated_at: Date;
 }

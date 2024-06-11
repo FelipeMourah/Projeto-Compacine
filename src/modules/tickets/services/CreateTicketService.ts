@@ -37,7 +37,7 @@ class CreateTicketService {
       ]);
     }
 
-    if (session.capacity < 0) {
+    if (session.capacity <= 0) {
       throw new AppError(
         400,
         'Bad Request',
