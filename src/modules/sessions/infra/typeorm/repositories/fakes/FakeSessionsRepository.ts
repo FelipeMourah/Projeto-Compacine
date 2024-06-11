@@ -4,9 +4,10 @@ import { ISession } from '@modules/sessions/domain/models/ISession';
 import { ISessionsRepository } from '@modules/sessions/domain/repositories/ISessionsRepository';
 import { v4 as uuidv4 } from 'uuid';
 import { Session } from '../../entities/Sessions';
+import { format } from 'date-fns';
 
 class FakeSessionsRepository implements ISessionsRepository {
-  private sessions: Session[];
+  private sessions: Session[] = [];
 
   public async findAll(): Promise<Session[]> {
     return this.sessions;
@@ -24,10 +25,14 @@ class FakeSessionsRepository implements ISessionsRepository {
     time,
   }: IFindSessionByRoomAndDateTime): Promise<Session[]> {
     const sessions = this.sessions.filter(session => {
-      session.room === room, session.day === day, session.time === time;
+      return (
+        session.room === room &&
+        session.day === format(day, 'yyyy-MM-dd') &&
+        session.time === time
+      );
     });
 
-    return sessions || undefined;
+    return sessions;
   }
 
   public async create({
